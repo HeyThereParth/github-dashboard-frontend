@@ -1,0 +1,66 @@
+.tabList {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2px;
+  gap: 2px;
+  user-select: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  height: 28px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--font-size-secondary);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.tab:hover:not(.active):not(:disabled) {
+  color: var(--color-text-primary);
+  background-color: var(--color-hover);
+}
+
+.tab:focus-visible {
+  outline: none;
+  border-color: var(--color-border-active);
+}
+
+.tab.active {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-elevated);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-metadata);
+  color: var(--color-text-muted);
+}
+
+.tab.active .count {
+  color: var(--color-text-secondary);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+}

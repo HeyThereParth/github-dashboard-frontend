@@ -1,0 +1,94 @@
+.metricCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.metricCard:hover {
+  border-color: var(--color-border-hover);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-tracked);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.badgeContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.valueContainer {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.value {
+  font-family: var(--font-body);
+  font-size: var(--font-size-metric);
+  font-weight: 600;
+  line-height: var(--line-height-metric);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary);
+}
+
+.suffix {
+  font-size: var(--font-size-secondary);
+  color: var(--color-text-secondary);
+}
+
+.supportingInfo {
+  font-size: var(--font-size-secondary);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Progress bar / meter */
+.meterTrack {
+  height: 4px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  display: flex;
+  margin-top: var(--space-1);
+}
+
+.meterSegment {
+  height: 100%;
+  transition: width var(--transition-normal);
+}
+
+.meterGold {
+  background-color: var(--palette-gold);
+}
+
+.meterCoral {
+  background-color: var(--palette-coral);
+}
+
+.meterMint {
+  background-color: var(--palette-mint);
+}
+
+.meterNeutral {
+  background-color: var(--palette-neutral-400);
+}

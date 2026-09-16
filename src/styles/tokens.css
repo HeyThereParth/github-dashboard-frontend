@@ -1,0 +1,170 @@
+:root {
+  /* ==========================================================================
+     Color Palette (Approved GitHub Intelligence Dark Mineral System)
+     ========================================================================== */
+  
+  /* Brand Tokens */
+  --palette-gold: #B7A16A;
+  --palette-gold-muted: #856D35;
+  --palette-gold-light: #E8D5A3;
+  --palette-gold-subtle: rgba(183, 161, 106, 0.12);
+  --palette-gold-glow: rgba(183, 161, 106, 0.25);
+
+  --palette-coral: #B96858;
+  --palette-coral-muted: #8F3F33;
+  --palette-coral-light: #F2CDC6;
+  --palette-coral-subtle: rgba(185, 104, 88, 0.12);
+  --palette-coral-glow: rgba(185, 104, 88, 0.25);
+
+  --palette-mint: #35B98A;
+  --palette-mint-muted: #238260;
+  --palette-mint-light: #B8EBD8;
+  --palette-mint-subtle: rgba(53, 185, 138, 0.12);
+  --palette-mint-glow: rgba(53, 185, 138, 0.25);
+
+  --palette-neutral-900: #08110F; /* Page background */
+  --palette-neutral-800: #0D1714; /* Card / Surface */
+  --palette-neutral-750: #121E19; /* Elevated surface */
+  --palette-neutral-700: #172620; /* Subtle hover / selection */
+  --palette-neutral-600: #1E322A; /* Active border / element */
+  --palette-neutral-500: #2C4339;
+  --palette-neutral-400: #63736C; /* Muted text */
+  --palette-neutral-300: #9EACA5; /* Secondary text */
+  --palette-neutral-200: #CFDAD4;
+  --palette-neutral-100: #E6ECE9; /* Primary text / off-white */
+
+  /* ==========================================================================
+     Semantic Tokens
+     ========================================================================== */
+  
+  /* Surfaces */
+  --color-bg: var(--palette-neutral-900);
+  --color-surface: var(--palette-neutral-800);
+  --color-surface-elevated: var(--palette-neutral-750);
+  --color-surface-hover: var(--palette-neutral-700);
+  --color-surface-active: var(--palette-neutral-600);
+  --color-surface-sunken: #050A09;
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-border-active: var(--palette-gold);
+  --color-border-hover: rgba(255, 255, 255, 0.15);
+
+  /* Typography Colors */
+  --color-text-primary: var(--palette-neutral-100);
+  --color-text-secondary: var(--palette-neutral-300);
+  --color-text-muted: var(--palette-neutral-400);
+  --color-text-disabled: #4A5751;
+  --color-text-inverse: var(--palette-neutral-900);
+
+  /* Semantic Status */
+  --color-primary: var(--palette-gold);
+  --color-primary-hover: #C5B17B;
+  --color-primary-subtle: var(--palette-gold-subtle);
+  
+  --color-success: var(--palette-mint);
+  --color-success-subtle: var(--palette-mint-subtle);
+  
+  --color-warning: var(--palette-gold);
+  --color-warning-subtle: var(--palette-gold-subtle);
+  
+  --color-error: var(--palette-coral);
+  --color-error-hover: #C57868;
+  --color-error-subtle: var(--palette-coral-subtle);
+  
+  --color-info: #5B9582;
+  --color-info-subtle: rgba(91, 149, 130, 0.12);
+
+  /* Interactive States */
+  --color-hover: rgba(255, 255, 255, 0.04);
+  --color-active: rgba(255, 255, 255, 0.08);
+  --color-focus-ring: rgba(183, 161, 106, 0.4);
+  --color-disabled-bg: rgba(255, 255, 255, 0.03);
+  --color-disabled-border: rgba(255, 255, 255, 0.04);
+
+  /* ==========================================================================
+     Typography Tokens
+     ========================================================================== */
+  
+  --font-headline: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+
+  /* Font Sizes & Line Heights */
+  --font-size-display: 38px;
+  --line-height-display: 1.15;
+
+  --font-size-page-title: 28px;
+  --line-height-page-title: 1.2;
+
+  --font-size-section-title: 20px;
+  --line-height-section-title: 1.3;
+
+  --font-size-metric: 32px;
+  --line-height-metric: 1.1;
+
+  --font-size-body-lg: 15px;
+  --line-height-body-lg: 1.5;
+
+  --font-size-body: 13px;
+  --line-height-body: 1.5;
+
+  --font-size-secondary: 12px;
+  --line-height-secondary: 1.45;
+
+  --font-size-label: 11px;
+  --line-height-label: 1.4;
+
+  --font-size-metadata: 11px;
+  --line-height-metadata: 1.35;
+
+  --font-size-table: 13px;
+  --line-height-table: 1.4;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-tracked: 0.08em;
+
+  /* ==========================================================================
+     Spacing Scale
+     ========================================================================== */
+  
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ==========================================================================
+     Border Radius Tokens (Restrained, not excessively rounded)
+     ========================================================================== */
+  
+  --radius-none: 0px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  /* ==========================================================================
+     Shadows (Restrained, subtle contrast)
+     ========================================================================== */
+  
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.6);
+
+  /* ==========================================================================
+     Transitions
+     ========================================================================== */
+  
+  --transition-fast: 120ms ease-out;
+  --transition-normal: 180ms ease-out;
+}

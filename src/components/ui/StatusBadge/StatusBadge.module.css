@@ -1,0 +1,75 @@
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-wide);
+  line-height: 1;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Status variants matching screenshots */
+.open {
+  background-color: var(--color-error-subtle);
+  border-color: rgba(185, 104, 88, 0.3);
+  color: var(--palette-coral);
+}
+.open .dot {
+  background-color: var(--palette-coral);
+  box-shadow: 0 0 6px var(--palette-coral-glow);
+}
+
+.merged {
+  background-color: var(--color-success-subtle);
+  border-color: rgba(53, 185, 138, 0.3);
+  color: var(--palette-mint);
+}
+.merged .dot {
+  background-color: var(--palette-mint);
+  box-shadow: 0 0 6px var(--palette-mint-glow);
+}
+
+.closed {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+.closed .dot {
+  background-color: var(--color-text-muted);
+}
+
+.draft {
+  background-color: var(--color-warning-subtle);
+  border-color: rgba(183, 161, 106, 0.3);
+  color: var(--palette-gold);
+}
+.draft .dot {
+  background-color: var(--palette-gold);
+}
+
+.neutral {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+.neutral .dot {
+  background-color: var(--color-text-secondary);
+}
+
+.pill {
+  border-radius: var(--radius-full);
+}
