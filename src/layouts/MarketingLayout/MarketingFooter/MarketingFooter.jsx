@@ -6,21 +6,31 @@ export const MarketingFooter = () => {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.left}>
-          <span>GitHub Intelligence</span>
-          <span className={styles.dot} aria-hidden="true" />
-          <span>Engineering Intelligence & Telemetry Platform</span>
+          <span className={styles.brandTitle}>GitHub Intelligence</span>
+          <span className={styles.brandSubtitle}>
+            Engineering intelligence from the work already happening in GitHub.
+          </span>
         </div>
 
-        <div className={styles.links}>
-          <Link to="/app/overview" className={styles.link}>
-            Application Shell
-          </Link>
-          <Link to="/design-system" className={styles.link}>
-            Design System
-          </Link>
-          <Link to="/health-test" className={styles.link}>
-            API Health Probe
-          </Link>
+        <div className={styles.right}>
+          <div className={styles.links}>
+            <a href="#features" className={styles.link}>
+              Features
+            </a>
+            <a href="#pipeline" className={styles.link}>
+              How It Works
+            </a>
+            <Link to="/app/overview" className={styles.link}>
+              Dashboard
+            </Link>
+            <Link to="/login" className={styles.link}>
+              Log In
+            </Link>
+            <Link to="/signup" className={styles.link}>
+              Get Started
+            </Link>
+          </div>
+          <span className={styles.copyright}>© 2026 GitHub Intelligence</span>
         </div>
       </div>
     </footer>

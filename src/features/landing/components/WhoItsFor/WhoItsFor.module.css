@@ -1,0 +1,72 @@
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6) var(--space-16);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.header {
+  margin-bottom: var(--space-10);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-tracked);
+  color: var(--palette-gold);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.title {
+  font-family: var(--font-headline);
+  font-size: 38px;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+}
+
+.columnsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-10);
+}
+
+@media (max-width: 860px) {
+  .columnsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.columnItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: var(--space-4);
+}
+
+.roleHeading {
+  font-family: var(--font-headline);
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.roleDescription {
+  font-size: var(--font-size-body-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}

@@ -1,0 +1,163 @@
+.section {
+  width: 100%;
+  padding: var(--space-12) 0 var(--space-10);
+  background-color: var(--palette-neutral-900);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.contentContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-tracked);
+  color: var(--palette-gold);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.title {
+  font-family: var(--font-headline);
+  font-size: 38px;
+  line-height: 1.18;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+  font-weight: 400;
+  max-width: 720px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  max-width: 620px;
+}
+
+/* Stream Track */
+.streamWrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.streamTrack {
+  display: flex;
+  gap: var(--space-3);
+  width: max-content;
+  animation: streamMarquee 38s linear infinite;
+}
+
+.streamTrack:hover {
+  animation-play-state: paused;
+}
+
+@keyframes streamMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .streamTrack {
+    animation: none;
+    overflow-x: auto;
+    width: 100%;
+    padding: var(--space-2) var(--space-6);
+  }
+}
+
+.eventItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.eventItem:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-surface-hover);
+}
+
+.eventIdentifier {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.badgeOpened {
+  color: var(--palette-coral);
+  background-color: rgba(185, 104, 88, 0.12);
+  border: 1px solid rgba(185, 104, 88, 0.3);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.badgeMerged {
+  color: var(--palette-mint);
+  background-color: rgba(53, 185, 138, 0.12);
+  border: 1px solid rgba(53, 185, 138, 0.3);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.badgeCommit {
+  color: var(--palette-gold);
+  background-color: rgba(183, 161, 106, 0.12);
+  border: 1px solid rgba(183, 161, 106, 0.3);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.badgeApproved {
+  color: var(--palette-mint);
+  background-color: rgba(53, 185, 138, 0.12);
+  border: 1px solid rgba(53, 185, 138, 0.3);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.eventMeta {
+  color: var(--color-text-muted);
+}

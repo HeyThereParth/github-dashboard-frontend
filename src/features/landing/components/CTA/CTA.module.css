@@ -1,21 +1,12 @@
 .section {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 var(--space-6) var(--space-12);
-}
-
-.ctaCard {
-  background-color: var(--color-surface);
-  border: 1px solid rgba(183, 161, 106, 0.3);
-  border-radius: var(--radius-lg);
-  padding: var(--space-10) var(--space-8);
+  padding: var(--space-16) var(--space-6) var(--space-12);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .eyebrow {
@@ -25,35 +16,82 @@
   letter-spacing: var(--letter-spacing-tracked);
   color: var(--palette-gold);
   text-transform: uppercase;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .title {
   font-family: var(--font-headline);
-  font-size: 36px;
+  font-size: 52px;
+  line-height: 1.1;
   color: var(--color-text-primary);
-  margin-bottom: var(--space-3);
-  max-width: 600px;
+  margin-bottom: var(--space-4);
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 @media (max-width: 768px) {
   .title {
-    font-size: 28px;
+    font-size: 34px;
   }
 }
 
 .description {
   font-size: var(--font-size-body-lg);
   color: var(--color-text-secondary);
-  max-width: 540px;
+  max-width: 580px;
   line-height: 1.6;
   margin-bottom: var(--space-6);
 }
 
-.actions {
+.ctaButton {
+  background-color: var(--palette-gold);
+  color: var(--palette-neutral-900);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.ctaButton:hover {
+  background-color: var(--palette-gold-light);
+}
+
+/* Event stream continuation strip */
+.eventContinuation {
+  margin-top: var(--space-12);
+  padding: var(--space-4) var(--space-6);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.eventTag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mintText {
+  color: var(--palette-mint);
+}
+
+.coralText {
+  color: var(--palette-coral);
+}
+
+.goldText {
+  color: var(--palette-gold);
 }

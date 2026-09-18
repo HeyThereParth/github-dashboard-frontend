@@ -1,50 +1,36 @@
 import { Link } from 'react-router-dom';
-import { Boxes } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
 import styles from './MarketingNavbar.module.css';
 
 export const MarketingNavbar = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* Branding */}
+        {/* Left: Minimal Brand */}
         <Link to="/" className={styles.brand} aria-label="GitHub Intelligence Home">
-          <div className={styles.brandIcon} aria-hidden="true">
-            <Boxes size={18} />
-          </div>
-          <div className={styles.brandText}>
-            <span className={styles.brandTag}>INTELLIGENCE</span>
-            <span className={styles.brandTitle}>GitHub Intelligence</span>
-          </div>
+          <span className={styles.brandDot} aria-hidden="true" />
+          <span className={styles.brandTitle}>GitHub Intelligence</span>
         </Link>
 
-        {/* Navigation Links */}
+        {/* Center: Navigation Links */}
         <nav className={styles.nav} aria-label="Public Navigation">
           <a href="#features" className={styles.navLink}>
             Features
           </a>
-          <a href="#how-it-works" className={styles.navLink}>
+          <a href="#pipeline" className={styles.navLink}>
             How It Works
           </a>
-          <a href="#preview" className={styles.navLink}>
-            Platform Preview
-          </a>
           <Link to="/app/overview" className={styles.navLink}>
-            Live Dashboard
+            Dashboard
           </Link>
         </nav>
 
-        {/* Action Buttons */}
+        {/* Right: Quiet Login + Gold CTA */}
         <div className={styles.actions}>
-          <Link to="/login">
-            <Button variant="ghost" size="sm">
-              Log In
-            </Button>
+          <Link to="/login" className={styles.loginLink}>
+            Log In
           </Link>
-          <Link to="/signup">
-            <Button variant="primary" size="sm">
-              Sign Up
-            </Button>
+          <Link to="/signup" className={styles.ctaButton}>
+            Get Started
           </Link>
         </div>
       </div>

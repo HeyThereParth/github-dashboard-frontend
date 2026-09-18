@@ -6,6 +6,7 @@ import {
   Filter,
   RefreshCw,
   GitPullRequest,
+  CheckCircle2,
 } from 'lucide-react';
 import {
   Button,
@@ -33,7 +34,9 @@ import {
   LoadingState,
   EmptyState,
   ErrorState,
-} from '../../components/ui';
+} from '@/components/ui';
+import { PullRequestActivityChart, ActiveRepositoriesCard } from '@/features/overview';
+import styles from './DesignSystemPage.module.css';
 
 export const DesignSystemPage = () => {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -101,80 +104,62 @@ export const DesignSystemPage = () => {
   ];
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'var(--space-6) var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
+    <div className={styles.pageContainer}>
       {/* Header */}
-      <header style={{ borderBottom: '1px solid var(--color-border)', paddingBottom: 'var(--space-4)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <nav style={{ marginBottom: 'var(--space-2)' }}>
-            <Link to="/" style={{ color: 'var(--color-primary)', fontSize: 'var(--font-size-secondary)' }}>
-              ← Back to Home
-            </Link>
-          </nav>
-          <h1>GitHub Intelligence Design System</h1>
-          <p style={{ color: 'var(--color-text-secondary)', marginTop: 'var(--space-1)', fontSize: 'var(--font-size-body)' }}>
-            Phase 1 reusable UI primitives, tokens, and components adhering strictly to the approved references.
+      <header className={styles.header}>
+        <div className={styles.headerLeft}>
+          <Link to="/" className={styles.backLink}>
+            ← Back to Home
+          </Link>
+          <h1 className={styles.pageTitle}>GitHub Intelligence Design System</h1>
+          <p className={styles.pageDesc}>
+            Approved architectural design language adhering strictly to the visual specifications in <code>DESIGN.md</code> and repository screenshots.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+        <div className={styles.headerActions}>
           <Button variant="outline" size="sm" leftIcon={<Download size={14} />}>
             Export Specs
           </Button>
-          <Button variant="primary" size="sm">
-            Phase 1 Ready
+          <Button variant="primary" size="sm" leftIcon={<CheckCircle2 size={14} />}>
+            Approved Reference
           </Button>
         </div>
       </header>
 
-      {/* 1. Color Palette Tokens */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-        <h2>Color Palette Tokens</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-3)' }}>
-          <div style={{ padding: 'var(--space-3)', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ height: '36px', background: 'var(--palette-gold)', borderRadius: 'var(--radius-sm)', marginBottom: 'var(--space-2)' }} />
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)', color: 'var(--color-text-primary)' }}>Primary (#B7A16A)</div>
-            <div style={{ fontSize: 'var(--font-size-metadata)', color: 'var(--color-text-muted)' }}>Gold accent / active borders</div>
+      {/* Flagship Reference Showcase: Engineering Overview (From Screenshot) */}
+      <section className={styles.showcaseSection} aria-label="Approved Engineering Overview Showcase">
+        <div className={styles.showcaseHeader}>
+          <div className={styles.showcaseEyebrow}>
+            <span className={styles.pulseDot} aria-hidden="true" />
+            <span>Approved Reference Composition — Engineering Overview</span>
           </div>
-
-          <div style={{ padding: 'var(--space-3)', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ height: '36px', background: 'var(--palette-coral)', borderRadius: 'var(--radius-sm)', marginBottom: 'var(--space-2)' }} />
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)', color: 'var(--color-text-primary)' }}>Secondary (#B96858)</div>
-            <div style={{ fontSize: 'var(--font-size-metadata)', color: 'var(--color-text-muted)' }}>Coral / Errors / Open PRs</div>
-          </div>
-
-          <div style={{ padding: 'var(--space-3)', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ height: '36px', background: 'var(--palette-mint)', borderRadius: 'var(--radius-sm)', marginBottom: 'var(--space-2)' }} />
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)', color: 'var(--color-text-primary)' }}>Tertiary (#35B98A)</div>
-            <div style={{ fontSize: 'var(--font-size-metadata)', color: 'var(--color-text-muted)' }}>Mint / Success / Merged PRs</div>
-          </div>
-
-          <div style={{ padding: 'var(--space-3)', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ height: '36px', background: 'var(--palette-neutral-900)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)', marginBottom: 'var(--space-2)' }} />
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)', color: 'var(--color-text-primary)' }}>Neutral (#08110F)</div>
-            <div style={{ fontSize: 'var(--font-size-metadata)', color: 'var(--color-text-muted)' }}>Dark mineral background</div>
-          </div>
+          <span className={styles.showcaseSource}>
+            Source: screenshots/Engineering Overview — GitHub Intelligence.png
+          </span>
         </div>
-      </section>
 
-      {/* 2. Metric Cards (Matching Screenshot Hierarchy) */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-        <h2>Metric Cards</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-4)' }}>
+        {/* Top 4 KPI Metric Cards */}
+        <div className={styles.metricsGrid}>
           <MetricCard
             label="PULL REQUESTS"
             value="1,284"
-            badge={<Badge variant="neutral">30D WINDOW</Badge>}
+            badge={<Badge variant="neutral">30D Window</Badge>}
             subtext="312 open · 842 merged · 130 closed"
             segments={[
               { value: 312, color: 'coral', label: 'Open' },
               { value: 842, color: 'gold', label: 'Merged' },
-              { value: 130, color: 'mint', label: 'Closed' },
+              { value: 130, color: 'neutral', label: 'Closed' },
             ]}
           />
 
           <MetricCard
             label="MERGE RATE"
             value="72.4%"
-            badge={<span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>↑+4.2%</span>}
+            badge={
+              <span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>
+                ↑+4.2%
+              </span>
+            }
             subtext="842 merged / 1,164 finalized"
             progress={72.4}
             progressColor="mint"
@@ -186,7 +171,7 @@ export const DesignSystemPage = () => {
             suffix="hours"
             badge={<Badge variant="neutral">P50 CAL</Badge>}
             subtext="P90: 46.2h · Avg: 21.4h"
-            progress={60}
+            progress={40}
             progressColor="gold"
           />
 
@@ -194,18 +179,64 @@ export const DesignSystemPage = () => {
             label="PR ACTIVITY"
             value="104"
             suffix="merged this wk"
-            badge={<span style={{ color: 'var(--palette-gold)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>+18.4% vel</span>}
+            badge={
+              <span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>
+                +18.4% vel
+              </span>
+            }
             subtext="12 workspaces synchronized"
             progress={85}
             progressColor="gold"
           />
         </div>
+
+        {/* Split Grid: Pull Request Activity Chart + Active Repositories */}
+        <div className={styles.overviewSplitGrid}>
+          <PullRequestActivityChart />
+          <ActiveRepositoriesCard />
+        </div>
       </section>
 
-      {/* 3. Buttons & Form Controls */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-        <h2>Buttons & Form Controls</h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
+      {/* 1. Color Palette Tokens */}
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Color Palette Tokens</h2>
+          <Badge variant="neutral">DESIGN TOKENS</Badge>
+        </div>
+        <div className={styles.tokenGrid}>
+          <div className={styles.tokenCard}>
+            <div className={styles.tokenSwatch} style={{ backgroundColor: 'var(--palette-gold)' }} />
+            <div className={styles.tokenName}>Primary (#B7A16A)</div>
+            <div className={styles.tokenRole}>Gold accent / active borders / merged metric</div>
+          </div>
+
+          <div className={styles.tokenCard}>
+            <div className={styles.tokenSwatch} style={{ backgroundColor: 'var(--palette-coral)' }} />
+            <div className={styles.tokenName}>Secondary (#B96858)</div>
+            <div className={styles.tokenRole}>Coral / velocity trend / open PR alerts</div>
+          </div>
+
+          <div className={styles.tokenCard}>
+            <div className={styles.tokenSwatch} style={{ backgroundColor: 'var(--palette-mint)' }} />
+            <div className={styles.tokenName}>Tertiary (#35B98A)</div>
+            <div className={styles.tokenRole}>Mint / positive efficiency / health indicator</div>
+          </div>
+
+          <div className={styles.tokenCard}>
+            <div className={styles.tokenSwatch} style={{ backgroundColor: 'var(--palette-neutral-900)', border: '1px solid var(--color-border)' }} />
+            <div className={styles.tokenName}>Neutral (#08110F)</div>
+            <div className={styles.tokenRole}>Dark mineral backdrop / restrained contrast</div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Buttons & Form Controls */}
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Buttons & Form Controls</h2>
+          <Badge variant="neutral">PRIMITIVES</Badge>
+        </div>
+        <div className={styles.controlsRow}>
           <Button variant="primary">Primary Button</Button>
           <Button variant="secondary">Secondary Button</Button>
           <Button variant="outline" leftIcon={<Filter size={14} />}>Filters</Button>
@@ -221,7 +252,7 @@ export const DesignSystemPage = () => {
           </Tooltip>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
+        <div className={styles.controlsGrid}>
           <Input
             placeholder="Filter by title, repository, or author..."
             value={searchValue}
@@ -247,16 +278,19 @@ export const DesignSystemPage = () => {
         </div>
       </section>
 
-      {/* 4. Badges & Status Badges */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-        <h2>Badges & Status Badges</h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
+      {/* 3. Badges & Status Badges */}
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Badges & Status Badges</h2>
+          <Badge variant="neutral">STATUS</Badge>
+        </div>
+        <div className={styles.badgesRow}>
           <StatusBadge status="open" />
           <StatusBadge status="merged" />
           <StatusBadge status="closed" />
           <StatusBadge status="draft" />
           
-          <span style={{ width: '1px', height: '20px', background: 'var(--color-border)' }} />
+          <span className={styles.badgesDivider} />
 
           <Badge variant="neutral">MAIN</Badge>
           <Badge variant="neutral">PROD</Badge>
@@ -267,10 +301,10 @@ export const DesignSystemPage = () => {
         </div>
       </section>
 
-      {/* 5. Engineering Table */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2>Engineering Table</h2>
+      {/* 4. Engineering Table */}
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Recent Pull Requests Table</h2>
           <Tabs tabs={tabs} value={selectedTab} onChange={setSelectedTab} />
         </div>
 
@@ -302,8 +336,8 @@ export const DesignSystemPage = () => {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                    <div style={{ width: '20px', height: '20px', borderRadius: 'var(--radius-full)', background: 'var(--color-surface-elevated)', border: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)' }}>
+                  <div className={styles.authorCell}>
+                    <div className={styles.authorAvatar}>
                       {row.initials}
                     </div>
                     <span>{row.author}</span>
@@ -339,10 +373,13 @@ export const DesignSystemPage = () => {
         </Table>
       </section>
 
-      {/* 6. States (Loading, Empty, Error) */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-        <h2>State Indicators & Card Layouts</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
+      {/* 5. States (Loading, Empty, Error) */}
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>State Indicators & Card Layouts</h2>
+          <Badge variant="neutral">STATES</Badge>
+        </div>
+        <div className={styles.statesGrid}>
           <Card>
             <CardHeader>
               <div>

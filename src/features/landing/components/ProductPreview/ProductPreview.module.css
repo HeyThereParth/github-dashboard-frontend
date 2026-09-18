@@ -1,24 +1,66 @@
 .section {
   width: 100%;
-  max-width: 1160px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 var(--space-6) var(--space-12);
+  padding: var(--space-12) var(--space-6) var(--space-16);
+}
+
+.previewHeader {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--space-8);
+}
+
+.previewEyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-tracked);
+  color: var(--palette-gold);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.sectionTitle {
+  font-family: var(--font-headline);
+  font-size: 40px;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 30px;
+  }
+}
+
+.sectionSubtitle {
+  font-size: var(--font-size-body-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
 }
 
 .previewCard {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  transition: border-color var(--transition-fast);
+}
+
+.previewCard:hover {
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .windowHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-4);
-  background-color: rgba(0, 0, 0, 0.3);
+  padding: var(--space-3) var(--space-5);
+  background-color: rgba(0, 0, 0, 0.35);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -32,7 +74,7 @@
   width: 9px;
   height: 9px;
   border-radius: var(--radius-full);
-  background-color: var(--color-border);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .windowTitle {
@@ -50,8 +92,21 @@
 
 .metricsGrid {
   display: grid;
-  grid-templateColumns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--space-4);
+}
+
+.overviewSplitGrid {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+@media (max-width: 960px) {
+  .overviewSplitGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .tableHeaderRow {
@@ -67,4 +122,5 @@
   font-family: var(--font-headline);
   font-size: var(--font-size-section-title);
   color: var(--color-text-primary);
+  font-weight: 400;
 }

@@ -11,6 +11,7 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui';
+import { PullRequestActivityChart, ActiveRepositoriesCard } from '@/features/overview';
 import styles from './ProductPreview.module.css';
 
 export const ProductPreview = () => {
@@ -50,9 +51,17 @@ export const ProductPreview = () => {
   ];
 
   return (
-    <section id="preview" className={styles.section} aria-label="Product Preview">
+    <section id="preview" className={styles.section} aria-label="Platform Preview">
+      <div className={styles.previewHeader}>
+        <div className={styles.previewEyebrow}>ONE VIEW</div>
+        <h2 className={styles.sectionTitle}>From hundreds of GitHub events to a few useful signals.</h2>
+        <p className={styles.sectionSubtitle}>
+          See pull requests, merge activity, repository trends, and cycle time without piecing the story together manually.
+        </p>
+      </div>
+
       <div className={styles.previewCard}>
-        {/* Fake window chrome header */}
+        {/* Window Chrome */}
         <div className={styles.windowHeader}>
           <div className={styles.windowDots}>
             <span className={styles.windowDot} />
@@ -60,10 +69,10 @@ export const ProductPreview = () => {
             <span className={styles.windowDot} />
           </div>
           <span className={styles.windowTitle}>github-intelligence.internal • Engineering Overview</span>
-          <Badge variant="neutral" size="sm">LIVE PREVIEW</Badge>
+          <Badge variant="neutral" size="sm">SAMPLE WORKSPACE</Badge>
         </div>
 
-        {/* Dashboard Preview Body */}
+        {/* Dashboard Content */}
         <div className={styles.previewContent}>
           {/* Top Metric Cards */}
           <div className={styles.metricsGrid}>
@@ -75,14 +84,18 @@ export const ProductPreview = () => {
               segments={[
                 { value: 312, color: 'coral', label: 'Open' },
                 { value: 842, color: 'gold', label: 'Merged' },
-                { value: 130, color: 'mint', label: 'Closed' },
+                { value: 130, color: 'neutral', label: 'Closed' },
               ]}
             />
 
             <MetricCard
               label="MERGE RATE"
               value="72.4%"
-              badge={<span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>↑+4.2%</span>}
+              badge={
+                <span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>
+                  ↑+4.2%
+                </span>
+              }
               subtext="842 merged / 1,164 finalized"
               progress={72.4}
               progressColor="mint"
@@ -94,7 +107,7 @@ export const ProductPreview = () => {
               suffix="hours"
               badge={<Badge variant="neutral">P50 CAL</Badge>}
               subtext="P90: 46.2h · Avg: 21.4h"
-              progress={60}
+              progress={40}
               progressColor="gold"
             />
 
@@ -102,11 +115,21 @@ export const ProductPreview = () => {
               label="PR ACTIVITY"
               value="104"
               suffix="merged this wk"
-              badge={<span style={{ color: 'var(--palette-gold)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>+18.4% vel</span>}
-              subtext="12 workspaces synchronized"
+              badge={
+                <span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>
+                  +18.4% vel
+                </span>
+              }
+              subtext="12 repositories tracked"
               progress={85}
               progressColor="gold"
             />
+          </div>
+
+          {/* Middle Split Grid: Pull Request Activity Chart + Active Repositories */}
+          <div className={styles.overviewSplitGrid}>
+            <PullRequestActivityChart />
+            <ActiveRepositoriesCard />
           </div>
 
           {/* Table Snippet */}

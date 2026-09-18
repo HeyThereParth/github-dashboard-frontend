@@ -1,0 +1,270 @@
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.storyRow {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-10);
+  align-items: center;
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.storyRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .storyRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-tracked);
+  color: var(--palette-gold);
+  text-transform: uppercase;
+}
+
+.headline {
+  font-family: var(--font-headline);
+  font-size: 40px;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .headline {
+    font-size: 30px;
+  }
+}
+
+.description {
+  font-size: var(--font-size-body-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Story 1: Miniature PR Table Visual */
+.miniTableWrapper {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.miniTableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  background-color: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.miniTableRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background-color var(--transition-fast);
+  cursor: default;
+}
+
+.miniTableRow:last-child {
+  border-bottom: none;
+}
+
+.miniTableRow:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.prIdTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.prId {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.prTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.statusOpen {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(185, 104, 88, 0.12);
+  border: 1px solid rgba(185, 104, 88, 0.3);
+  color: var(--palette-coral);
+  font-weight: 600;
+}
+
+.statusMerged {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(53, 185, 138, 0.12);
+  border: 1px solid rgba(53, 185, 138, 0.3);
+  color: var(--palette-mint);
+  font-weight: 600;
+}
+
+/* Story 2: Cycle Time Typography & Distribution */
+.cycleVisualWrapper {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.oversizedMetric {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.oversizedNumber {
+  font-family: var(--font-body);
+  font-size: 64px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.oversizedLabel {
+  font-size: var(--font-size-body-lg);
+  color: var(--color-text-secondary);
+}
+
+.distributionBars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.barRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.barMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.barTitle {
+  color: var(--color-text-muted);
+}
+
+.barValue {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.distTrack {
+  height: 6px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.distFillMint {
+  height: 100%;
+  background-color: var(--palette-mint);
+}
+
+.distFillGold {
+  height: 100%;
+  background-color: var(--palette-gold);
+}
+
+/* Story 3: Repository Proportional Bars */
+.repoVisualWrapper {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.repoVisualRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.repoVisualName {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-primary);
+  min-width: 160px;
+}
+
+.repoVisualBarContainer {
+  flex: 1;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.repoVisualBarFill {
+  height: 100%;
+  background-color: var(--palette-gold);
+  border-radius: var(--radius-full);
+}
+
+.repoVisualLatency {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  width: 44px;
+  text-align: right;
+}
