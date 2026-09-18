@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useInView } from '../../hooks';
 import {
   MetricCard,
   Badge,
@@ -16,6 +17,7 @@ import styles from './ProductPreview.module.css';
 
 export const ProductPreview = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const [sectionRef, inView] = useInView({ threshold: 0.1, triggerOnce: true });
 
   const tabs = [
     { value: 'all', label: 'All', count: 1284 },
@@ -51,7 +53,7 @@ export const ProductPreview = () => {
   ];
 
   return (
-    <section id="preview" className={styles.section} aria-label="Platform Preview">
+    <section ref={sectionRef} id="preview" className={styles.section} aria-label="Platform Preview">
       <div className={styles.previewHeader}>
         <div className={styles.previewEyebrow}>ONE VIEW</div>
         <h2 className={styles.sectionTitle}>From hundreds of GitHub events to a few useful signals.</h2>
@@ -60,7 +62,7 @@ export const ProductPreview = () => {
         </p>
       </div>
 
-      <div className={styles.previewCard}>
+      <div className={`${styles.previewCard} ${inView ? styles.previewCardVisible : ''}`}>
         {/* Window Chrome */}
         <div className={styles.windowHeader}>
           <div className={styles.windowDots}>

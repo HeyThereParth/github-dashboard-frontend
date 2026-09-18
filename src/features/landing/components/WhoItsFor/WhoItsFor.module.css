@@ -64,16 +64,26 @@
   gap: var(--space-3);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: var(--space-4);
+  transition: border-top-color 200ms ease-out;
+}
+
+.columnItem:hover {
+  border-top-color: rgba(183, 161, 106, 0.4);
 }
 
 .roleHeading {
   font-family: var(--font-headline);
   font-size: 24px;
   line-height: 1.2;
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   font-weight: 400;
   letter-spacing: -0.01em;
   margin: 0;
+  transition: color 200ms ease-out;
+}
+
+.columnItem:hover .roleHeading {
+  color: var(--color-text-primary);
 }
 
 .roleDescription {

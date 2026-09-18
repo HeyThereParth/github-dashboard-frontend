@@ -7,3 +7,4 @@ export * from './components/QuestionsSection';
 export * from './components/HowItWorks';
 export * from './components/WhoItsFor';
 export * from './components/CTA';
+export * from './hooks';

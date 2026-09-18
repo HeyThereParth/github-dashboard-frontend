@@ -1,8 +1,15 @@
+import { useInView, useCountUp } from '../../hooks';
 import styles from './SignalsBento.module.css';
 
 export const SignalsBento = () => {
+  const [sectionRef, inView] = useInView({ threshold: 0.15, triggerOnce: true });
+
+  const cycleTimeValue = useCountUp({ target: '18.4', enabled: inView, duration: 600 });
+  const mergeRateValue = useCountUp({ target: '72.4%', enabled: inView, duration: 600 });
+  const weeklyActivityValue = useCountUp({ target: '104', enabled: inView, duration: 600 });
+
   return (
-    <section className={styles.section} aria-label="Signals and Insights">
+    <section ref={sectionRef} className={styles.section} aria-label="Signals and Insights">
       <div className={styles.header}>
         <div className={styles.eyebrow}>SIGNALS → INSIGHTS</div>
         <h2 className={styles.title}>Extracted signals from raw repository events.</h2>
@@ -17,7 +24,7 @@ export const SignalsBento = () => {
           </div>
 
           <div className={styles.heroMetric}>
-            <span className={styles.bigValue}>18.4</span>
+            <span className={styles.bigValue}>{cycleTimeValue}</span>
             <span className={styles.metricSuffix}>hours typical to merge</span>
           </div>
 
@@ -101,12 +108,15 @@ export const SignalsBento = () => {
             </div>
 
             <div className={styles.metricValRow}>
-              <span className={styles.metricBigVal}>72.4%</span>
+              <span className={styles.metricBigVal}>{mergeRateValue}</span>
               <span className={styles.metricDetail}>842 / 1,164 finalized</span>
             </div>
 
             <div className={styles.meterTrack} aria-hidden="true">
-              <div className={styles.meterMint} style={{ width: '72.4%' }} />
+              <div
+                className={`${styles.meterMint} ${inView ? styles.meterRevealed : ''}`}
+                style={{ width: '72.4%' }}
+              />
             </div>
           </div>
 
@@ -118,12 +128,15 @@ export const SignalsBento = () => {
             </div>
 
             <div className={styles.metricValRow}>
-              <span className={styles.metricBigVal}>104</span>
+              <span className={styles.metricBigVal}>{weeklyActivityValue}</span>
               <span className={styles.metricDetail}>merged this week</span>
             </div>
 
             <div className={styles.meterTrack} aria-hidden="true">
-              <div className={styles.meterGold} style={{ width: '85%' }} />
+              <div
+                className={`${styles.meterGold} ${inView ? styles.meterRevealed : ''}`}
+                style={{ width: '85%' }}
+              />
             </div>
           </div>
         </div>

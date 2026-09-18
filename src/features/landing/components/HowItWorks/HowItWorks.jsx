@@ -1,6 +1,9 @@
+import { useInView } from '../../hooks';
 import styles from './HowItWorks.module.css';
 
 export const HowItWorks = () => {
+  const [containerRef, inView] = useInView({ threshold: 0.15, triggerOnce: true });
+
   return (
     <section id="pipeline" className={styles.section} aria-label="Engineering Data Pipeline">
       <div className={styles.header}>
@@ -8,7 +11,10 @@ export const HowItWorks = () => {
         <h2 className={styles.title}>From raw GitHub events to clear engineering signals.</h2>
       </div>
 
-      <div className={styles.pipelineContainer}>
+      <div
+        ref={containerRef}
+        className={`${styles.pipelineContainer} ${inView ? styles.pipelineContainerVisible : ''}`}
+      >
         <div className={styles.pipelineFlow}>
           {/* Stage 1: GitHub Sources */}
           <div className={styles.stageBox}>
@@ -38,13 +44,14 @@ export const HowItWorks = () => {
 
           {/* Connector 1 */}
           <div className={styles.connector} aria-hidden="true">
+            <span className={styles.signalPulse1} />
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={styles.connectorSvg}>
               <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
 
           {/* Stage 2: GitHub Intelligence Processing */}
-          <div className={styles.stageBox}>
+          <div className={`${styles.stageBox} ${styles.stageBoxMiddle}`}>
             <div className={styles.stageHeader}>
               <span>02 · INTELLIGENCE ENGINE</span>
             </div>
@@ -71,6 +78,7 @@ export const HowItWorks = () => {
 
           {/* Connector 2 */}
           <div className={styles.connector} aria-hidden="true">
+            <span className={styles.signalPulse2} />
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={styles.connectorSvg}>
               <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

@@ -78,6 +78,7 @@
   gap: var(--space-3);
   width: max-content;
   animation: streamMarquee 38s linear infinite;
+  will-change: transform;
 }
 
 .streamTrack:hover {
@@ -86,10 +87,10 @@
 
 @keyframes streamMarquee {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -113,10 +114,16 @@
   font-family: var(--font-mono);
   font-size: 11px;
   white-space: nowrap;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  opacity: 0.82;
+  transition: opacity 180ms ease-out, border-color 180ms ease-out, background-color 180ms ease-out;
+}
+
+.eventItemKey {
+  opacity: 0.95;
 }
 
 .eventItem:hover {
+  opacity: 1;
   border-color: var(--color-border-hover);
   background-color: var(--color-surface-hover);
 }

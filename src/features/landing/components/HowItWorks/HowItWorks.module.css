@@ -57,6 +57,14 @@
   flex-direction: column;
   gap: var(--space-6);
   position: relative;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out, border-color var(--transition-fast);
+}
+
+.pipelineContainerVisible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .pipelineFlow {
@@ -138,14 +146,124 @@
   color: var(--palette-gold);
   opacity: 0.75;
   transition: opacity var(--transition-fast);
+  position: relative;
 }
 
 .connectorSvg {
   display: block;
 }
 
+.signalPulse1 {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--palette-gold);
+  box-shadow: 0 0 5px var(--palette-gold-glow);
+  animation: flowPulse1 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes flowPulse1 {
+  0% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  5% {
+    opacity: 1;
+    transform: translateX(-8px);
+  }
+  35% {
+    opacity: 1;
+    transform: translateX(12px);
+  }
+  40% {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  40.1%, 100% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+
+.stageBoxMiddle {
+  animation: stageMiddlePulse 4s ease-in-out infinite;
+}
+
+@keyframes stageMiddlePulse {
+  0%, 39% {
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+  }
+  46% {
+    border-color: rgba(183, 161, 106, 0.45);
+    box-shadow: 0 0 14px rgba(183, 161, 106, 0.12);
+  }
+  55%, 100% {
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+  }
+}
+
+.signalPulse2 {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--palette-mint);
+  box-shadow: 0 0 5px var(--palette-mint-glow);
+  animation: flowPulse2 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes flowPulse2 {
+  0%, 54.9% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  55% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-8px);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(12px);
+  }
+  95% {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  95.1%, 100% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+
 @media (max-width: 900px) {
   .connector {
     transform: rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipelineContainer {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .signalPulse1,
+  .signalPulse2 {
+    display: none;
+    animation: none;
+  }
+  .stageBoxMiddle {
+    animation: none;
   }
 }

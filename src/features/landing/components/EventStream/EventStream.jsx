@@ -27,17 +27,23 @@ export const EventStream = () => {
 
       <div className={styles.streamWrapper}>
         <div className={styles.streamTrack} aria-hidden="true">
-          {displayEvents.map((evt, idx) => (
-            <div key={`${evt.id}-${idx}`} className={styles.eventItem}>
-              <span className={styles.eventDot} />
-              <span className={styles.eventIdentifier}>{evt.id}</span>
-              <span className={styles[evt.badgeClass]}>{evt.type}</span>
-              <span className={styles.eventRepo}>{evt.repo}</span>
-              <span className={styles.eventSeparator}>·</span>
-              <span className={styles.eventDetail}>{evt.detail}</span>
-              <span className={styles.eventTime}>{evt.time}</span>
-            </div>
-          ))}
+          {displayEvents.map((evt, idx) => {
+            const isKey = evt.type === 'MERGED' || evt.type === 'APPROVED';
+            return (
+              <div
+                key={`${evt.id}-${idx}`}
+                className={`${styles.eventItem} ${isKey ? styles.eventItemKey : ''}`}
+              >
+                <span className={styles.eventDot} />
+                <span className={styles.eventIdentifier}>{evt.id}</span>
+                <span className={styles[evt.badgeClass]}>{evt.type}</span>
+                <span className={styles.eventRepo}>{evt.repo}</span>
+                <span className={styles.eventSeparator}>·</span>
+                <span className={styles.eventDetail}>{evt.detail}</span>
+                <span className={styles.eventTime}>{evt.time}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

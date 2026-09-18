@@ -1,10 +1,18 @@
+import { useInView } from '../../hooks';
 import styles from './FeatureStories.module.css';
 
 export const FeatureStories = () => {
+  const [story1Ref, story1InView] = useInView({ threshold: 0.2, triggerOnce: true });
+  const [story2Ref, story2InView] = useInView({ threshold: 0.2, triggerOnce: true });
+  const [story3Ref, story3InView] = useInView({ threshold: 0.2, triggerOnce: true });
+
   return (
     <section id="features" className={styles.section} aria-label="Core Capabilities">
       {/* FEATURE 01: PULL REQUESTS */}
-      <div className={styles.storyRow}>
+      <div
+        ref={story1Ref}
+        className={`${styles.storyRow} ${story1InView ? styles.story1Visible : ''}`}
+      >
         <div className={styles.textContent}>
           <span className={styles.eyebrow}>01 / PULL REQUESTS</span>
           <h2 className={styles.headline}>Know what is moving.</h2>
@@ -46,7 +54,10 @@ export const FeatureStories = () => {
       </div>
 
       {/* FEATURE 02: CYCLE TIME */}
-      <div className={styles.storyRow}>
+      <div
+        ref={story2Ref}
+        className={`${styles.storyRow} ${story2InView ? styles.story2Visible : ''}`}
+      >
         <div className={styles.textContent}>
           <span className={styles.eyebrow}>02 / CYCLE TIME</span>
           <h2 className={styles.headline}>See where time is going.</h2>
@@ -86,7 +97,10 @@ export const FeatureStories = () => {
       </div>
 
       {/* FEATURE 03: REPOSITORIES */}
-      <div className={styles.storyRow}>
+      <div
+        ref={story3Ref}
+        className={`${styles.storyRow} ${story3InView ? styles.story3Visible : ''}`}
+      >
         <div className={styles.textContent}>
           <span className={styles.eyebrow}>03 / REPOSITORIES</span>
           <h2 className={styles.headline}>See the bigger picture.</h2>

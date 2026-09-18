@@ -64,7 +64,39 @@
   line-height: 1.6;
   color: var(--color-text-secondary);
   max-width: 660px;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-3);
+}
+
+.descriptorWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  margin-bottom: var(--space-6);
+}
+
+.rotatingDescriptor {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-tracked);
+  color: var(--palette-gold);
+  text-transform: uppercase;
+  will-change: transform, opacity;
+}
+
+.descriptorEntering {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 160ms ease-out, transform 160ms ease-out;
+}
+
+.descriptorLeaving {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 140ms ease-in, transform 140ms ease-in;
 }
 
 .ctaGroup {
@@ -87,11 +119,12 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast), transform 180ms ease-out;
 }
 
 .primaryCta:hover {
   background-color: var(--palette-gold-light);
+  transform: translateY(-1px);
 }
 
 .secondaryCta {
@@ -106,12 +139,13 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform 180ms ease-out;
 }
 
 .secondaryCta:hover {
   border-color: var(--color-border-hover);
   background-color: var(--color-surface-hover);
+  transform: translateY(-1px);
 }
 
 .signalStrip {
@@ -140,6 +174,18 @@
   border-radius: var(--radius-full);
   background-color: var(--palette-mint);
   box-shadow: 0 0 5px var(--palette-mint-glow);
+  animation: mintBreathing 3s ease-in-out infinite;
+}
+
+@keyframes mintBreathing {
+  0%, 100% {
+    opacity: 0.75;
+    box-shadow: 0 0 3px var(--palette-mint-glow);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 8px var(--palette-mint-glow);
+  }
 }
 
 .signalGoldDot {
@@ -214,6 +260,20 @@
 @media (max-height: 650px) {
   .scrollIndicator {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollChevron {
+    animation: none;
+  }
+  .signalMintDot {
+    animation: none;
+  }
+  .rotatingDescriptor {
+    transition: none;
+    transform: none;
+    opacity: 1;
   }
 }
 

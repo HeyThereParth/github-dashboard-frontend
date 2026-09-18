@@ -74,7 +74,11 @@
   font-size: 22px;
   text-align: left;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition:
+    color 180ms ease-out,
+    background-color 180ms ease-out,
+    border-color 180ms ease-out,
+    padding 180ms ease-out;
   outline: none;
 }
 
@@ -126,23 +130,27 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
-  animation: inspectorFadeIn 180ms ease-out;
+  will-change: transform, opacity;
 }
 
-@keyframes inspectorFadeIn {
-  from {
-    opacity: 0.65;
-    transform: translateY(3px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.inspectorEntering {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 160ms ease-out, transform 160ms ease-out;
+}
+
+.inspectorLeaving {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 140ms ease-in, transform 140ms ease-in;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .inspectorContent {
-    animation: none;
+  .inspectorEntering,
+  .inspectorLeaving {
+    transition: none;
+    transform: none;
+    opacity: 1;
   }
 }
 

@@ -10,6 +10,13 @@
   z-index: 50;
   display: flex;
   align-items: center;
+  transition: background-color 200ms ease, border-bottom-color 200ms ease, box-shadow 200ms ease;
+}
+
+.headerScrolled {
+  background-color: rgba(8, 17, 15, 0.95);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .container {
@@ -90,13 +97,14 @@
   padding: 6px 14px;
   border-radius: var(--radius-sm);
   text-decoration: none;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast), transform 180ms ease-out;
   display: inline-flex;
   align-items: center;
 }
 
 .ctaButton:hover {
   background-color: var(--palette-gold-light);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {

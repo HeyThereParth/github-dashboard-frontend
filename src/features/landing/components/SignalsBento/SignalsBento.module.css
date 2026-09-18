@@ -175,11 +175,21 @@
 .meterMint {
   background-color: var(--palette-mint);
   height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .meterGold {
   background-color: var(--palette-gold);
   height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.meterRevealed {
+  transform: scaleX(1);
 }
 
 /* Right side repository panel */
@@ -218,8 +228,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-3) 0;
+  padding: var(--space-3) var(--space-2);
+  margin: 0 calc(-1 * var(--space-2));
+  border-radius: var(--radius-sm);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background-color 180ms ease-out;
+}
+
+.repoRow:hover {
+  background-color: var(--color-surface-hover);
 }
 
 .repoRow:last-child {
@@ -311,5 +328,13 @@
 .metricDetail {
   font-size: 12px;
   color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meterMint,
+  .meterGold {
+    transform: scaleX(1);
+    transition: none;
+  }
 }
 

@@ -98,8 +98,28 @@
   align-items: center;
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  transition: background-color var(--transition-fast);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 350ms ease-out, transform 350ms ease-out, background-color var(--transition-fast);
   cursor: default;
+}
+
+.story1Visible .miniTableRow:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0ms;
+}
+
+.story1Visible .miniTableRow:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 70ms;
+}
+
+.story1Visible .miniTableRow:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 140ms;
 }
 
 .miniTableRow:last-child {
@@ -165,6 +185,14 @@
   display: flex;
   align-items: baseline;
   gap: var(--space-3);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+.story2Visible .oversizedMetric {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .oversizedNumber {
@@ -220,14 +248,25 @@
   overflow: hidden;
 }
 
-.distFillMint {
+.distFillMint,
+.distFillGold {
   height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.distFillMint {
   background-color: var(--palette-mint);
 }
 
 .distFillGold {
-  height: 100%;
   background-color: var(--palette-gold);
+}
+
+.story2Visible .distFillMint,
+.story2Visible .distFillGold {
+  transform: scaleX(1);
 }
 
 /* Story 3: Repository Proportional Bars */
@@ -253,6 +292,12 @@
   font-size: 12px;
   color: var(--color-text-primary);
   min-width: 160px;
+  opacity: 0;
+  transition: opacity 350ms ease-out;
+}
+
+.story3Visible .repoVisualName {
+  opacity: 1;
 }
 
 .repoVisualBarContainer {
@@ -267,6 +312,13 @@
   height: 100%;
   background-color: var(--palette-gold);
   border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1) 120ms;
+}
+
+.story3Visible .repoVisualBarFill {
+  transform: scaleX(1);
 }
 
 .repoVisualLatency {
@@ -275,4 +327,27 @@
   color: var(--color-text-muted);
   width: 44px;
   text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .miniTableRow {
+    opacity: 1;
+    transform: none;
+    transition: background-color var(--transition-fast);
+  }
+  .oversizedMetric {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .distFillMint,
+  .distFillGold,
+  .repoVisualBarFill {
+    transform: scaleX(1);
+    transition: none;
+  }
+  .repoVisualName {
+    opacity: 1;
+    transition: none;
+  }
 }

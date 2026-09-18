@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { usePrefersReducedMotion } from '../../hooks';
 import styles from './QuestionsSection.module.css';
 
 const QUESTIONS_DATA = [
@@ -57,9 +58,41 @@ const QUESTIONS_DATA = [
 ];
 
 export const QuestionsSection = () => {
-  const [activeIdx, setActiveIdx] = useState(1); // Default to "What's taking longer?" as requested in spec
+  const [activeIdx, setActiveIdx] = useState(1);
+  const [displayIdx, setDisplayIdx] = useState(1);
+  const [isExiting, setIsExiting] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const transitionTimerRef = useRef(null);
 
-  const current = QUESTIONS_DATA[activeIdx];
+  const handleSelectQuestion = (newIndex) => {
+    if (newIndex === activeIdx) return;
+    setActiveIdx(newIndex);
+
+    if (prefersReducedMotion) {
+      setDisplayIdx(newIndex);
+      return;
+    }
+
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+    }
+
+    setIsExiting(true);
+    transitionTimerRef.current = setTimeout(() => {
+      setDisplayIdx(newIndex);
+      setIsExiting(false);
+    }, 140);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+    };
+  }, []);
+
+  const current = QUESTIONS_DATA[displayIdx];
 
   return (
     <section className={styles.section} aria-label="Key Engineering Questions">
@@ -79,8 +112,8 @@ export const QuestionsSection = () => {
                   role="tab"
                   aria-selected={isActive}
                   className={`${styles.questionButton} ${isActive ? styles.questionButtonActive : ''}`}
-                  onClick={() => setActiveIdx(index)}
-                  onMouseEnter={() => setActiveIdx(index)}
+                  onClick={() => handleSelectQuestion(index)}
+                  onMouseEnter={() => handleSelectQuestion(index)}
                 >
                   <span className={styles.questionIndex}>{item.idx}</span>
                   <span className={styles.questionText}>{item.question}</span>
@@ -92,7 +125,12 @@ export const QuestionsSection = () => {
 
         {/* Right: Dynamic Inspector Visual */}
         <div className={styles.inspectorBox} role="tabpanel" aria-live="polite">
-          <div key={current.idx} className={styles.inspectorContent}>
+          <div
+            key={current.idx}
+            className={`${styles.inspectorContent} ${
+              isExiting ? styles.inspectorLeaving : styles.inspectorEntering
+            }`}
+          >
             <div className={styles.inspectorHeader}>
               <div className={styles.inspectorTagGroup}>
                 <span className={styles.inspectorDot} />

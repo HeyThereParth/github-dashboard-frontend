@@ -1,8 +1,36 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import { usePrefersReducedMotion } from '../../hooks';
 import styles from './Hero.module.css';
 
+const DESCRIPTORS = [
+  'TRACKING · PULL REQUESTS',
+  'TRACKING · CYCLE TIME',
+  'TRACKING · REPOSITORY ACTIVITY',
+  'TRACKING · DELIVERY TRENDS',
+];
+
 export const Hero = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % DESCRIPTORS.length);
+        setIsTransitioning(false);
+      }, 140);
+      return () => clearTimeout(timer);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
+
   return (
     <section className={styles.heroSection} aria-label="Introduction">
       <div className={styles.heroContent}>
@@ -18,6 +46,16 @@ export const Hero = () => {
         <p className={styles.description}>
           GitHub Intelligence turns the activity already happening in your repositories and pull requests into a clearer view of what is moving, what is taking time, and what is changing.
         </p>
+
+        <div className={styles.descriptorWrapper} aria-hidden="true">
+          <span
+            className={`${styles.rotatingDescriptor} ${
+              isTransitioning ? styles.descriptorLeaving : styles.descriptorEntering
+            }`}
+          >
+            {DESCRIPTORS[prefersReducedMotion ? 0 : currentIndex]}
+          </span>
+        </div>
 
         <div className={styles.ctaGroup}>
           <Link to="/signup" className={styles.primaryCta}>
