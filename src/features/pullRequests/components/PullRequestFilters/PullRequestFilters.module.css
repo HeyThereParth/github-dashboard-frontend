@@ -1,0 +1,19 @@
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.tabGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.statsText {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-metadata);
+  color: var(--color-text-muted);
+}

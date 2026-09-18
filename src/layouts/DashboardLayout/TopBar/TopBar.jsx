@@ -3,17 +3,24 @@ import {
   ChevronDown,
   Calendar,
   Search,
-  User,
 } from 'lucide-react';
 import { IconButton } from '@/components/ui/IconButton';
+import { useWorkspace } from '@/features/workspace';
+import UserMenu from '@/features/auth/components/UserMenu';
 import styles from './TopBar.module.css';
 
 export const TopBar = ({
   onToggleMobileMenu,
-  scopeName = 'org/acme-infrastructure',
-  syncStatusText = 'Last PR ingested 42s ago',
+  scopeName,
+  syncStatusText,
   windowText = 'Window: Last 30 days',
 }) => {
+  const { currentWorkspace, workspaceDetail } = useWorkspace();
+
+  const displayScope = scopeName || currentWorkspace?.name || 'Workspace';
+  const isConnected = workspaceDetail?.is_github_connected;
+  const statusDisplay = syncStatusText || (isConnected ? 'Sync active' : 'GitHub not connected');
+
   return (
     <header className={styles.topBar}>
       {/* Left Area: Scope and Sync Status */}
@@ -37,7 +44,7 @@ export const TopBar = ({
             className={styles.scopeSelector}
             aria-label="Select organization or repository scope"
           >
-            <span>{scopeName}</span>
+            <span>{displayScope}</span>
             <ChevronDown size={12} color="var(--color-text-muted)" />
           </button>
         </div>
@@ -45,10 +52,12 @@ export const TopBar = ({
         <div className={styles.divider} aria-hidden="true" />
 
         <div className={styles.syncStatus}>
-          <span className={styles.syncDot} aria-hidden="true" />
-          <span className={styles.syncText}>Sync active</span>
-          <span>•</span>
-          <span>{syncStatusText}</span>
+          <span
+            className={styles.syncDot}
+            style={{ backgroundColor: isConnected ? 'var(--color-success, #10b981)' : 'var(--color-text-muted, #71717a)' }}
+            aria-hidden="true"
+          />
+          <span className={styles.syncText}>{statusDisplay}</span>
         </div>
       </div>
 
@@ -72,13 +81,7 @@ export const TopBar = ({
           <Search size={14} />
         </IconButton>
 
-        <button
-          type="button"
-          className={styles.avatarButton}
-          aria-label="User profile and account settings"
-        >
-          <User size={15} />
-        </button>
+        <UserMenu />
       </div>
     </header>
   );

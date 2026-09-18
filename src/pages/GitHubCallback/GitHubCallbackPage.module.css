@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: var(--space-4);
+  width: 100%;
+}
+
+.cardWrapper {
+  max-width: 500px;
+  width: 100%;
+}
+
+.statusIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconSuccess {
+  color: var(--palette-mint);
+  border-color: rgba(53, 185, 138, 0.3);
+}
+
+.iconError {
+  color: var(--palette-coral);
+  border-color: rgba(185, 104, 88, 0.3);
+}
+
+.iconWarning {
+  color: var(--palette-gold);
+  border-color: rgba(183, 161, 106, 0.3);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}

@@ -12,6 +12,8 @@ import PullRequestsPage from '@/pages/PullRequests';
 import AnalyticsPage from '@/pages/Analytics';
 import PipelinePage from '@/pages/Pipeline';
 import SettingsPage from '@/pages/Settings';
+import GitHubCallbackPage from '@/pages/GitHubCallback';
+import { AuthGate } from '@/features/auth';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: '/github/callback',
+    element: (
+      <AuthGate>
+        <GitHubCallbackPage />
+      </AuthGate>
+    ),
+  },
+  {
     path: '/health-test',
     element: <HealthTestPage />,
   },
@@ -42,7 +52,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/app',
-    element: <DashboardLayout />,
+    element: (
+      <AuthGate>
+        <DashboardLayout />
+      </AuthGate>
+    ),
     children: [
       {
         index: true,

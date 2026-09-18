@@ -175,7 +175,9 @@ export const RepositoryCard = ({
       <div className={styles.actions}>
         {isTracked ? (
           <>
-            <Link to={`/app/pull-requests?repo=${encodeURIComponent(repoName)}`}>
+            <Link
+              to={`/app/pull-requests?repositoryId=${encodeURIComponent(repository.id)}&repo=${encodeURIComponent(repoName)}`}
+            >
               <Button
                 variant="outline"
                 size="sm"

@@ -7,9 +7,8 @@ import {
   LineChart,
   Activity,
   SlidersHorizontal,
-  Building2,
-  ChevronsUpDown,
 } from 'lucide-react';
+import { WorkspaceSelector } from '@/features/workspace';
 import styles from './Sidebar.module.css';
 
 const NAV_ITEMS = [
@@ -67,17 +66,7 @@ export const Sidebar = ({ onNavigate = null }) => {
           <span className={styles.versionTag}>V2.4.1</span>
         </div>
 
-        <button
-          type="button"
-          className={styles.workspaceTrigger}
-          aria-label="Workspace selector"
-        >
-          <div className={styles.workspaceLeft}>
-            <Building2 size={14} color="var(--color-text-muted)" />
-            <span className={styles.workspaceName}>acme-systems</span>
-          </div>
-          <ChevronsUpDown size={14} color="var(--color-text-muted)" />
-        </button>
+        <WorkspaceSelector />
       </div>
     </aside>
   );
