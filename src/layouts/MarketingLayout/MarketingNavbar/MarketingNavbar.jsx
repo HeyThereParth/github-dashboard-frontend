@@ -20,7 +20,7 @@ export const MarketingNavbar = () => {
       <div className={styles.container}>
         {/* Left: Minimal Brand */}
         <Link to="/" className={styles.brand} aria-label="GitHub Intelligence Home">
-          <span className={styles.brandDot} aria-hidden="true" />
+          {/* <span className={styles.brandDot} aria-hidden="true" /> */}
           <span className={styles.brandTitle}>GitHub Intelligence</span>
         </Link>
 

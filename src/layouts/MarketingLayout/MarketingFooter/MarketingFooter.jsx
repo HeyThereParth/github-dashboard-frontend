@@ -20,15 +20,15 @@ export const MarketingFooter = () => {
             <a href="#pipeline" className={styles.link}>
               How It Works
             </a>
-            <Link to="/app/overview" className={styles.link}>
+            {/* <Link to="/app/overview" className={styles.link}>
               Dashboard
-            </Link>
+            </Link> */}
             <Link to="/login" className={styles.link}>
               Log In
             </Link>
-            <Link to="/signup" className={styles.link}>
+            {/* <Link to="/signup" className={styles.link}>
               Get Started
-            </Link>
+            </Link> */}
           </div>
           <span className={styles.copyright}>© 2026 GitHub Intelligence</span>
         </div>

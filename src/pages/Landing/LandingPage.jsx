@@ -15,7 +15,7 @@ export const LandingPage = () => {
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden' }}>
       <Hero />
       <EventStream />
-      <SignalsBento />
+      {/* <SignalsBento /> */}
       <ProductPreview />
       <FeatureStories />
       <QuestionsSection />

@@ -135,7 +135,7 @@ export const ProductPreview = () => {
           </div>
 
           {/* Table Snippet */}
-          <div>
+          {/* <div>
             <div className={styles.tableHeaderRow}>
               <h3 className={styles.tableTitle}>Recent pull requests</h3>
               <Tabs tabs={tabs} value={activeTab} onChange={setActiveTab} />
@@ -178,7 +178,7 @@ export const ProductPreview = () => {
                 ))}
               </TableBody>
             </Table>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
