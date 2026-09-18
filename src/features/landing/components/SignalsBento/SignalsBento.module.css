@@ -98,11 +98,20 @@
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--color-text-primary);
+  display: inline-block;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+}
+
+.metricValueCycle {
+  min-width: 3.3ch;
 }
 
 .metricSuffix {
   font-size: var(--font-size-body-lg);
   color: var(--color-text-secondary);
+  min-width: 0;
 }
 
 .distributionRow {
@@ -323,11 +332,24 @@
   font-weight: 600;
   color: var(--color-text-primary);
   line-height: 1.1;
+  display: inline-block;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+}
+
+.metricValuePercentage {
+  min-width: 5.2ch;
+}
+
+.metricValueActivity {
+  min-width: 3.1ch;
 }
 
 .metricDetail {
   font-size: 12px;
   color: var(--color-text-muted);
+  min-width: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

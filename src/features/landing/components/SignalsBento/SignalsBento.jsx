@@ -24,7 +24,7 @@ export const SignalsBento = () => {
           </div>
 
           <div className={styles.heroMetric}>
-            <span className={styles.bigValue}>{cycleTimeValue}</span>
+            <span className={`${styles.bigValue} ${styles.metricValueCycle}`}>{cycleTimeValue}</span>
             <span className={styles.metricSuffix}>hours typical to merge</span>
           </div>
 
@@ -108,7 +108,9 @@ export const SignalsBento = () => {
             </div>
 
             <div className={styles.metricValRow}>
-              <span className={styles.metricBigVal}>{mergeRateValue}</span>
+              <span className={`${styles.metricBigVal} ${styles.metricValuePercentage}`}>
+                {mergeRateValue}
+              </span>
               <span className={styles.metricDetail}>842 / 1,164 finalized</span>
             </div>
 
@@ -128,7 +130,9 @@ export const SignalsBento = () => {
             </div>
 
             <div className={styles.metricValRow}>
-              <span className={styles.metricBigVal}>{weeklyActivityValue}</span>
+              <span className={`${styles.metricBigVal} ${styles.metricValueActivity}`}>
+                {weeklyActivityValue}
+              </span>
               <span className={styles.metricDetail}>merged this week</span>
             </div>
 
