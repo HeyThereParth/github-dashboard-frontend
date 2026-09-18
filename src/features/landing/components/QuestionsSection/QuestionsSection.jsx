@@ -5,10 +5,10 @@ const QUESTIONS_DATA = [
   {
     idx: '01',
     question: "What's moving?",
-    tag: 'ACTIVE PR THROUGHPUT',
+    tag: 'ACTIVE PULL REQUESTS',
     value: '312',
     unit: 'open pull requests',
-    details: 'Real-time telemetry showing pull requests actively in review across 12 tracked repositories.',
+    details: 'Real-time overview across 12 connected repositories showing work actively in review.',
     metrics: [
       { label: 'OPEN', val: '312' },
       { label: 'MERGED (30D)', val: '842' },
@@ -18,10 +18,10 @@ const QUESTIONS_DATA = [
   {
     idx: '02',
     question: "What's taking longer?",
-    tag: 'PULL REQUEST CYCLE TIME',
+    tag: 'CYCLE TIME DISTRIBUTION',
     value: '18.4h',
     unit: 'average duration',
-    details: 'Compare median turnaround with high-latency integration branches to eliminate review friction.',
+    details: 'Compare median turnaround against high-latency branches to spot review and merge delays.',
     metrics: [
       { label: 'P50 MEDIAN', val: '14.2h' },
       { label: 'P90 BOUNDARY', val: '46.2h' },
@@ -31,10 +31,10 @@ const QUESTIONS_DATA = [
   {
     idx: '03',
     question: "What's being merged?",
-    tag: 'DELIVERY ACTIVITY & RATE',
+    tag: 'DELIVERY CADENCE',
     value: '72.4%',
-    unit: 'merge success rate',
-    details: '104 pull requests merged this week with +18.4% efficiency delta against the 30-day baseline.',
+    unit: 'merge rate',
+    details: '104 pull requests merged this week, tracking delivery pace against the 30-day baseline.',
     metrics: [
       { label: 'THIS WEEK', val: '104' },
       { label: 'MERGED TOTAL', val: '842' },
@@ -47,11 +47,11 @@ const QUESTIONS_DATA = [
     tag: 'REPOSITORY VELOCITY',
     value: '12',
     unit: 'active repositories',
-    details: 'Continuous background synchronization tracking production trunks, mainlines, and release candidates.',
+    details: 'Continuous activity monitoring across production branches, mainlines, and release tags.',
     metrics: [
       { label: 'FASTEST P50', val: '4.6h' },
       { label: 'MEDIAN P50', val: '14.2h' },
-      { label: 'STATUS', val: 'OPTIMAL' },
+      { label: 'STATUS', val: 'STEADY' },
     ],
   },
 ];
@@ -92,25 +92,30 @@ export const QuestionsSection = () => {
 
         {/* Right: Dynamic Inspector Visual */}
         <div className={styles.inspectorBox} role="tabpanel" aria-live="polite">
-          <div className={styles.inspectorHeader}>
-            <span className={styles.inspectorTag}>{current.tag}</span>
-            <span className={styles.inspectorMeta}>CALIBRATED 30D</span>
-          </div>
-
-          <div className={styles.inspectorValueRow}>
-            <span className={styles.inspectorValue}>{current.value}</span>
-            <span className={styles.inspectorUnit}>{current.unit}</span>
-          </div>
-
-          <p className={styles.inspectorDetails}>{current.details}</p>
-
-          <div className={styles.inspectorSubGrid}>
-            {current.metrics.map((m) => (
-              <div key={m.label} className={styles.subItem}>
-                <span className={styles.subLabel}>{m.label}</span>
-                <span className={styles.subVal}>{m.val}</span>
+          <div key={current.idx} className={styles.inspectorContent}>
+            <div className={styles.inspectorHeader}>
+              <div className={styles.inspectorTagGroup}>
+                <span className={styles.inspectorDot} />
+                <span className={styles.inspectorTag}>{current.tag}</span>
               </div>
-            ))}
+              <span className={styles.inspectorMeta}>30-DAY WINDOW</span>
+            </div>
+
+            <div className={styles.inspectorValueRow}>
+              <span className={styles.inspectorValue}>{current.value}</span>
+              <span className={styles.inspectorUnit}>{current.unit}</span>
+            </div>
+
+            <p className={styles.inspectorDetails}>{current.details}</p>
+
+            <div className={styles.inspectorSubGrid}>
+              {current.metrics.map((m) => (
+                <div key={m.label} className={styles.subItem}>
+                  <span className={styles.subLabel}>{m.label}</span>
+                  <span className={styles.subVal}>{m.val}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

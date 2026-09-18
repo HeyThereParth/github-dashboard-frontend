@@ -136,9 +136,12 @@
   align-items: center;
   justify-content: center;
   color: var(--palette-gold);
-  font-family: var(--font-mono);
-  font-size: 18px;
-  opacity: 0.6;
+  opacity: 0.75;
+  transition: opacity var(--transition-fast);
+}
+
+.connectorSvg {
+  display: block;
 }
 
 @media (max-width: 900px) {

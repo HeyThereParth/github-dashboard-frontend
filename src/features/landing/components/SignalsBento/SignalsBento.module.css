@@ -267,3 +267,49 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--color-text-secondary);
 }
+
+.windowTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--palette-gold);
+}
+
+.filterTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.trendMint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--palette-mint);
+  font-weight: 500;
+}
+
+.trendGold {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--palette-gold);
+  font-weight: 500;
+}
+
+.metricValRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.metricBigVal {
+  font-family: var(--font-body);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.1;
+}
+
+.metricDetail {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+

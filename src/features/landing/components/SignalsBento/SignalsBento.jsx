@@ -13,9 +13,7 @@ export const SignalsBento = () => {
         <div className={styles.cycleTimeBlock}>
           <div className={styles.blockHeader}>
             <span className={styles.blockLabel}>PULL REQUEST CYCLE TIME</span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--palette-gold)' }}>
-              WINDOW: 30D
-            </span>
+            <span className={styles.windowTag}>WINDOW: 30D</span>
           </div>
 
           <div className={styles.heroMetric}>
@@ -43,9 +41,7 @@ export const SignalsBento = () => {
         <div className={styles.repoPanel}>
           <div className={styles.blockHeader}>
             <span className={styles.blockLabel}>ACTIVE REPOSITORIES</span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--color-text-muted)' }}>
-              BY VELOCITY
-            </span>
+            <span className={styles.filterTag}>BY VELOCITY</span>
           </div>
 
           <div className={styles.repoList}>
@@ -101,18 +97,12 @@ export const SignalsBento = () => {
           <div className={styles.metricBlock}>
             <div className={styles.blockHeader}>
               <span className={styles.blockLabel}>MERGE RATE</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--palette-mint)' }}>
-                ↑+4.2%
-              </span>
+              <span className={styles.trendMint}>↑+4.2%</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: '36px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
-                72.4%
-              </span>
-              <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>
-                842 / 1,164 finalized
-              </span>
+            <div className={styles.metricValRow}>
+              <span className={styles.metricBigVal}>72.4%</span>
+              <span className={styles.metricDetail}>842 / 1,164 finalized</span>
             </div>
 
             <div className={styles.meterTrack} aria-hidden="true">
@@ -124,18 +114,12 @@ export const SignalsBento = () => {
           <div className={styles.metricBlock}>
             <div className={styles.blockHeader}>
               <span className={styles.blockLabel}>WEEKLY ACTIVITY</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--palette-gold)' }}>
-                +18.4%
-              </span>
+              <span className={styles.trendGold}>+18.4%</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: '36px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
-                104
-              </span>
-              <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>
-                merged this week
-              </span>
+            <div className={styles.metricValRow}>
+              <span className={styles.metricBigVal}>104</span>
+              <span className={styles.metricDetail}>merged this week</span>
             </div>
 
             <div className={styles.meterTrack} aria-hidden="true">

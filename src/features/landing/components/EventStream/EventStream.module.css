@@ -121,6 +121,14 @@
   background-color: var(--color-surface-hover);
 }
 
+.eventDot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--palette-neutral-500);
+  flex-shrink: 0;
+}
+
 .eventIdentifier {
   color: var(--color-text-primary);
   font-weight: 500;
@@ -170,6 +178,22 @@
   font-weight: 600;
 }
 
-.eventMeta {
-  color: var(--color-text-muted);
+.eventRepo {
+  color: var(--palette-gold);
+  font-size: 11px;
+}
+
+.eventSeparator {
+  color: var(--palette-neutral-600);
+  user-select: none;
+}
+
+.eventDetail {
+  color: var(--color-text-secondary);
+}
+
+.eventTime {
+  color: var(--palette-neutral-400);
+  font-size: 10px;
+  margin-left: 2px;
 }

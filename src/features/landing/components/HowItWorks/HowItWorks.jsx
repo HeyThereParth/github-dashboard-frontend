@@ -23,7 +23,7 @@ export const HowItWorks = () => {
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} />
-                <span>Code Reviews & Comments</span>
+                <span>Reviews, Approvals & Comments</span>
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} />
@@ -31,14 +31,16 @@ export const HowItWorks = () => {
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} />
-                <span>Repository Metadata</span>
+                <span>Repository Commit Metadata</span>
               </div>
             </div>
           </div>
 
           {/* Connector 1 */}
           <div className={styles.connector} aria-hidden="true">
-            →
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={styles.connectorSvg}>
+              <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </div>
 
           {/* Stage 2: GitHub Intelligence Processing */}
@@ -54,7 +56,7 @@ export const HowItWorks = () => {
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} style={{ backgroundColor: 'var(--palette-mint)' }} />
-                <span>Merge Rate & Success Hygiene</span>
+                <span>Merge Rate Calculation</span>
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} style={{ backgroundColor: 'var(--palette-coral)' }} />
@@ -69,31 +71,33 @@ export const HowItWorks = () => {
 
           {/* Connector 2 */}
           <div className={styles.connector} aria-hidden="true">
-            →
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={styles.connectorSvg}>
+              <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </div>
 
           {/* Stage 3: Dashboard Output */}
           <div className={styles.stageBox}>
             <div className={styles.stageHeader}>
-              <span>03 · OPERATIONAL OUTPUT</span>
+              <span>03 · INSIGHTS & SIGNALS</span>
             </div>
             <h3 className={styles.stageTitle}>Dashboard</h3>
             <div className={styles.stageItems}>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} style={{ backgroundColor: 'var(--palette-mint)' }} />
-                <span>Live PR Throughput Status</span>
+                <span>Live Pull Request Status</span>
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} style={{ backgroundColor: 'var(--palette-mint)' }} />
-                <span>Weekly Velocity Delta Tracking</span>
+                <span>Weekly Delivery Comparison</span>
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} style={{ backgroundColor: 'var(--palette-mint)' }} />
-                <span>Ranked Repository Latency</span>
+                <span>Repository Turnaround Times</span>
               </div>
               <div className={styles.stageItem}>
                 <span className={styles.stageDot} style={{ backgroundColor: 'var(--palette-mint)' }} />
-                <span>Non-Gamified Team Flow</span>
+                <span>Team Workflow Visibility</span>
               </div>
             </div>
           </div>

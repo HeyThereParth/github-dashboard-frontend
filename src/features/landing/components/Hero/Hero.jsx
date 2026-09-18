@@ -28,6 +28,23 @@ export const Hero = () => {
             <span>Explore Dashboard</span>
           </Link>
         </div>
+
+        <div className={styles.signalStrip} aria-hidden="true">
+          <span className={styles.signalItem}>
+            <span className={styles.signalMintDot} />
+            <span>12 repositories</span>
+          </span>
+          <span className={styles.signalDivider}>/</span>
+          <span className={styles.signalItem}>
+            <span className={styles.signalGoldDot} />
+            <span>P50 cycle time 14.2h</span>
+          </span>
+          <span className={styles.signalDivider}>/</span>
+          <span className={styles.signalItem}>
+            <span className={styles.signalCoralDot} />
+            <span>842 PRs merged</span>
+          </span>
+        </div>
       </div>
 
       <div className={styles.scrollIndicator} aria-hidden="true">

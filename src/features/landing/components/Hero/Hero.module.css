@@ -114,6 +114,67 @@
   background-color: var(--color-surface-hover);
 }
 
+.signalStrip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding: 6px 16px;
+  background-color: rgba(13, 23, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--palette-neutral-300);
+}
+
+.signalItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.signalMintDot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background-color: var(--palette-mint);
+  box-shadow: 0 0 5px var(--palette-mint-glow);
+}
+
+.signalGoldDot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background-color: var(--palette-gold);
+}
+
+.signalCoralDot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background-color: var(--palette-coral);
+}
+
+.signalDivider {
+  color: rgba(255, 255, 255, 0.15);
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .signalStrip {
+    flex-direction: column;
+    border-radius: var(--radius-sm);
+    gap: 6px;
+    padding: 8px 14px;
+    margin-top: var(--space-6);
+  }
+  .signalDivider {
+    display: none;
+  }
+}
+
+
 /* Bottom scroll indicator */
 .scrollIndicator {
   position: absolute;
