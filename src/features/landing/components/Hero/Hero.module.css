@@ -1,10 +1,23 @@
-.hero {
-  padding: var(--space-12) var(--space-6) var(--space-8);
+.heroSection {
+  width: 100%;
+  min-height: calc(100vh - 56px);
+  min-height: calc(100dvh - 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  padding: var(--space-8) var(--space-6) 64px;
+}
+
+.heroContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   max-width: 860px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -18,7 +31,7 @@
   letter-spacing: var(--letter-spacing-tracked);
   color: var(--palette-gold);
   text-transform: uppercase;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .eyebrowDot {
@@ -31,7 +44,7 @@
 
 .title {
   font-family: var(--font-headline);
-  font-size: 52px;
+  font-size: 56px;
   line-height: 1.12;
   letter-spacing: -0.025em;
   color: var(--color-text-primary);
@@ -41,7 +54,7 @@
 
 @media (max-width: 768px) {
   .title {
-    font-size: 36px;
+    font-size: 38px;
   }
 }
 
@@ -50,8 +63,8 @@
   font-size: 16px;
   line-height: 1.6;
   color: var(--color-text-secondary);
-  max-width: 680px;
-  margin-bottom: var(--space-6);
+  max-width: 660px;
+  margin-bottom: var(--space-8);
 }
 
 .ctaGroup {
@@ -68,7 +81,7 @@
   font-family: var(--font-body);
   font-size: var(--font-size-body);
   font-weight: 600;
-  padding: 10px 22px;
+  padding: 12px 24px;
   border-radius: var(--radius-sm);
   text-decoration: none;
   display: inline-flex;
@@ -88,7 +101,7 @@
   font-family: var(--font-body);
   font-size: var(--font-size-body);
   font-weight: 500;
-  padding: 10px 20px;
+  padding: 12px 22px;
   border-radius: var(--radius-sm);
   text-decoration: none;
   display: inline-flex;
@@ -100,3 +113,46 @@
   border-color: var(--color-border-hover);
   background-color: var(--color-surface-hover);
 }
+
+/* Bottom scroll indicator */
+.scrollIndicator {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.scrollText {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+.scrollChevron {
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@media (max-height: 650px) {
+  .scrollIndicator {
+    display: none;
+  }
+}
+
