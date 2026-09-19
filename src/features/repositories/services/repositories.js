@@ -88,3 +88,16 @@ export const listSyncJobs = async (workspaceId, repositoryId, limit = 5) => {
   );
   return response.data;
 };
+
+/**
+ * Get sync job status by job ID.
+ *
+ * @param {string} jobId - Unique sync job UUID
+ * @returns {Promise<{ id: string, job_id?: string, status: string, error_message: string | null, total_synced?: number, started_at: string | null, completed_at: string | null }>}
+ */
+export const getSyncJob = async (jobId) => {
+  if (!jobId) return null;
+  const response = await apiClient.get(`/api/v1/repositories/sync-jobs/${jobId}`);
+  return response.data;
+};
+

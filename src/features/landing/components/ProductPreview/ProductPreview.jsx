@@ -1,56 +1,14 @@
-import { useState } from 'react';
 import { useInView } from '../../hooks';
 import {
   MetricCard,
   Badge,
-  StatusBadge,
-  Tabs,
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
 } from '@/components/ui';
 import { PullRequestActivityChart, ActiveRepositoriesCard } from '@/features/overview';
+import { SAMPLE_ACTIVITY_DATA } from '@/features/overview/components/PullRequestActivityChart/sampleData';
 import styles from './ProductPreview.module.css';
 
 export const ProductPreview = () => {
-  const [activeTab, setActiveTab] = useState('all');
   const [sectionRef, inView] = useInView({ threshold: 0.1, triggerOnce: true });
-
-  const tabs = [
-    { value: 'all', label: 'All', count: 1284 },
-    { value: 'open', label: 'Open', count: 312, dotColor: 'var(--palette-coral)' },
-    { value: 'merged', label: 'Merged', count: 842, dotColor: 'var(--palette-mint)' },
-  ];
-
-  const samplePRs = [
-    {
-      id: '#142',
-      title: 'Fix authentication token expiration handling',
-      repo: 'auth-service',
-      state: 'open',
-      cycleTime: '2.4h',
-      updated: '42m ago',
-    },
-    {
-      id: '#389',
-      title: 'Optimize PR throughput telemetry ingestion batching',
-      repo: 'github-intelligence-core',
-      state: 'merged',
-      cycleTime: '14.8h',
-      updated: '1.5h ago',
-    },
-    {
-      id: '#104',
-      title: 'Implement dark mineral architectural design system',
-      repo: 'engineering-dashboard',
-      state: 'merged',
-      cycleTime: '8.2h',
-      updated: '3h ago',
-    },
-  ];
 
   return (
     <section ref={sectionRef} id="preview" className={styles.section} aria-label="Platform Preview">
@@ -130,7 +88,7 @@ export const ProductPreview = () => {
 
           {/* Middle Split Grid: Pull Request Activity Chart + Active Repositories */}
           <div className={styles.overviewSplitGrid}>
-            <PullRequestActivityChart />
+            <PullRequestActivityChart data={SAMPLE_ACTIVITY_DATA} />
             <ActiveRepositoriesCard />
           </div>
 

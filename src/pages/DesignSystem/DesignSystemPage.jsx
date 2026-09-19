@@ -36,6 +36,7 @@ import {
   ErrorState,
 } from '@/components/ui';
 import { PullRequestActivityChart, ActiveRepositoriesCard } from '@/features/overview';
+import { SAMPLE_ACTIVITY_DATA } from '@/features/overview/components/PullRequestActivityChart/sampleData';
 import styles from './DesignSystemPage.module.css';
 
 export const DesignSystemPage = () => {
@@ -192,7 +193,7 @@ export const DesignSystemPage = () => {
 
         {/* Split Grid: Pull Request Activity Chart + Active Repositories */}
         <div className={styles.overviewSplitGrid}>
-          <PullRequestActivityChart />
+          <PullRequestActivityChart data={SAMPLE_ACTIVITY_DATA} />
           <ActiveRepositoriesCard />
         </div>
       </section>

@@ -172,9 +172,7 @@ export const RepositoriesPage = () => {
   const handleSync = async (repositoryId) => {
     setSyncingId(repositoryId);
     try {
-      await syncMutation.mutateAsync(repositoryId);
-    } catch {
-      // Error handled by TanStack Query / Error UI
+      return await syncMutation.mutateAsync(repositoryId);
     } finally {
       setSyncingId(null);
     }

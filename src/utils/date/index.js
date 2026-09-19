@@ -1,3 +1,48 @@
+const MONTH_NAMES = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+];
+
+/**
+ * Parse an ISO date input, ensuring naive UTC strings (e.g. "2026-09-14T00:00:00")
+ * are correctly normalized by appending 'Z' before JavaScript Date parsing.
+ *
+ * @param {string | Date | null | undefined} dateInput
+ * @returns {Date | null}
+ */
+export const parseUtcDate = (dateInput) => {
+  if (!dateInput) return null;
+  if (dateInput instanceof Date) {
+    return isNaN(dateInput.getTime()) ? null : dateInput;
+  }
+  if (typeof dateInput === 'string') {
+    const trimmed = dateInput.trim();
+    if (!trimmed) return null;
+    // Check for naive ISO datetime string without timezone (e.g. 2026-09-14T00:00:00)
+    const isNaiveIso = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(trimmed);
+    const normalized = isNaiveIso ? `${trimmed}Z` : trimmed;
+    const date = new Date(normalized);
+    return isNaN(date.getTime()) ? null : date;
+  }
+  const date = new Date(dateInput);
+  return isNaN(date.getTime()) ? null : date;
+};
+
+/**
+ * Format a week_start or day UTC string into a short label (e.g. "Sep 14").
+ * Strictly uses UTC getters to prevent browser timezone shifts.
+ *
+ * @param {string | Date | null | undefined} weekStartInput
+ * @returns {string}
+ */
+export const formatWeekStart = (weekStartInput) => {
+  const date = parseUtcDate(weekStartInput);
+  if (!date) return String(weekStartInput || '');
+  const month = MONTH_NAMES[date.getUTCMonth()];
+  const day = date.getUTCDate();
+  return `${month} ${day}`;
+};
+
 /**
  * Format an ISO date string into a clean relative time label (e.g., "42s ago", "12m ago", "3h ago", "2d ago").
  * If the date is invalid or missing, returns a fallback string.
@@ -6,9 +51,8 @@
  * @returns {string}
  */
 export const formatRelativeTime = (dateInput) => {
-  if (!dateInput) return '';
-  const date = new Date(dateInput);
-  if (isNaN(date.getTime())) return '';
+  const date = parseUtcDate(dateInput);
+  if (!date) return '';
 
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
@@ -37,4 +81,9 @@ export const formatRelativeTime = (dateInput) => {
   return `${diffYears}y ago`;
 };
 
-export default formatRelativeTime;
+export default {
+  parseUtcDate,
+  formatWeekStart,
+  formatRelativeTime,
+};
+

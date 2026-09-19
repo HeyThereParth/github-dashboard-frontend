@@ -1,7 +1,6 @@
 import {
   Hero,
   EventStream,
-  SignalsBento,
   ProductPreview,
   FeatureStories,
   QuestionsSection,

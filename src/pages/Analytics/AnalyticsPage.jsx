@@ -9,10 +9,14 @@ import {
   useAnalyticsOverview,
   useAnalyticsThroughput,
   useAnalyticsAuthors,
+  useAnalyticsActivity,
+  useAnalyticsCycleTimeTrend,
   AnalyticsContextBar,
   AnalyticsKpiGrid,
   ThroughputChart,
   ContributorTable,
+  CycleTimeTrendChart,
+  PullRequestActivityChart,
 } from '@/features/analytics';
 import styles from './AnalyticsPage.module.css';
 
@@ -104,6 +108,30 @@ export const AnalyticsPage = () => {
     workspaceId,
     repositoryId,
     days,
+  });
+
+  const {
+    data: activityData,
+    isLoading: isActivityLoading,
+    isError: isActivityError,
+    error: activityError,
+    refetch: refetchActivity,
+  } = useAnalyticsActivity({
+    workspaceId,
+    days,
+    repositoryId,
+  });
+
+  const {
+    data: cycleTimeData,
+    isLoading: isCycleTimeLoading,
+    isError: isCycleTimeError,
+    error: cycleTimeError,
+    refetch: refetchCycleTime,
+  } = useAnalyticsCycleTimeTrend({
+    workspaceId,
+    weeks,
+    repositoryId,
   });
 
   // 6. Navigation and parameter handlers
@@ -270,7 +298,37 @@ export const AnalyticsPage = () => {
         )}
       </div>
 
-      {/* 2. Throughput Delivery Velocity Section */}
+      {/* 2. Pull Request Activity Over Time */}
+      <div className={styles.section}>
+        {isActivityError ? (
+          <ErrorState
+            title="Failed to load pull request activity"
+            message={activityError?.message || 'Could not fetch activity analytics for this repository.'}
+            onRetry={refetchActivity}
+          />
+        ) : isActivityLoading ? (
+          <LoadingState variant="skeleton" rows={5} />
+        ) : (
+          <PullRequestActivityChart data={activityData} days={days} />
+        )}
+      </div>
+
+      {/* 3. Cycle Time Trend & Percentiles */}
+      <div className={styles.section}>
+        {isCycleTimeError ? (
+          <ErrorState
+            title="Failed to load cycle time trend"
+            message={cycleTimeError?.message || 'Could not fetch cycle time trend analytics for this repository.'}
+            onRetry={refetchCycleTime}
+          />
+        ) : isCycleTimeLoading ? (
+          <LoadingState variant="skeleton" rows={5} />
+        ) : (
+          <CycleTimeTrendChart data={cycleTimeData} weeks={weeks} />
+        )}
+      </div>
+
+      {/* 4. Throughput Delivery Velocity Section */}
       <div className={styles.section}>
         {isThroughputError ? (
           <ErrorState

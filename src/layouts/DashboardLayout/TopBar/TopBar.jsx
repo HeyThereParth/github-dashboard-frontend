@@ -18,7 +18,10 @@ export const TopBar = ({
   const { currentWorkspace, workspaceDetail } = useWorkspace();
 
   const displayScope = scopeName || currentWorkspace?.name || 'Workspace';
-  const isConnected = workspaceDetail?.is_github_connected;
+  const isConnected = Boolean(
+    workspaceDetail?.is_github_connected ??
+      (currentWorkspace?.is_github_connected ?? (currentWorkspace?.github_installation_id != null))
+  );
   const statusDisplay = syncStatusText || (isConnected ? 'Sync active' : 'GitHub not connected');
 
   return (

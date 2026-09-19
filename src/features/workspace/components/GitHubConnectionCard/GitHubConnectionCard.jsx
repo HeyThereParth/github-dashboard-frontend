@@ -13,6 +13,7 @@ import styles from './GitHubConnectionCard.module.css';
 export const GitHubConnectionCard = () => {
   const {
     currentWorkspace,
+    workspaceDetail,
     workspaceId,
     getGitHubInstallUrl,
     disconnectGitHub,
@@ -23,8 +24,12 @@ export const GitHubConnectionCard = () => {
   const [error, setError] = useState(null);
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
 
-  const isConnected = Boolean(currentWorkspace?.is_github_connected);
-  const installationId = currentWorkspace?.github_installation_id;
+  // Reliable connection state: prefer workspaceDetail if present, fallback to github_installation_id !== null
+  const isConnected = Boolean(
+    workspaceDetail?.is_github_connected ??
+      (currentWorkspace?.is_github_connected ?? (currentWorkspace?.github_installation_id != null))
+  );
+  const installationId = currentWorkspace?.github_installation_id ?? workspaceDetail?.github_installation_id;
 
   const handleConnect = async () => {
     if (!workspaceId) return;

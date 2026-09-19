@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/Button';
 import { IconButton } from '@/components/ui/IconButton';
 import { formatRelativeTime } from '@/utils/date';
 import { useRepositorySyncJobs } from '../../hooks/useRepositorySyncJobs';
+import { useSyncJob } from '../../hooks/useSyncJob';
 import styles from './RepositoryCard.module.css';
 
 /**
@@ -25,7 +26,7 @@ import styles from './RepositoryCard.module.css';
  * @param {boolean} [props.isTracked=false]
  * @param {({ owner, repo }: { owner: string, repo: string }) => void} [props.onTrack]
  * @param {(repositoryId: string) => void} [props.onUntrack]
- * @param {(repositoryId: string) => void} [props.onSync]
+ * @param {(repositoryId: string) => Promise<{ job_id?: string } | void>} [props.onSync]
  * @param {boolean} [props.isTracking=false]
  * @param {boolean} [props.isUntracking=false]
  * @param {boolean} [props.isSyncTriggering=false]
@@ -42,18 +43,37 @@ export const RepositoryCard = ({
   isSyncTriggering = false,
 }) => {
   const [showUntrackConfirm, setShowUntrackConfirm] = useState(false);
+  const [triggeredJobId, setTriggeredJobId] = useState(null);
 
-  // For tracked repositories, subscribe to sync jobs telemetry
+  // For tracked repositories, fetch historical sync jobs for initial status display
   const { data: syncJobs = [] } = useRepositorySyncJobs(
     workspaceId,
     isTracked ? repository.id : null,
   );
 
-  const latestJob = syncJobs.length > 0 ? syncJobs[0] : null;
+  const latestHistoryJob = syncJobs.length > 0 ? syncJobs[0] : null;
+  const historyStatus = latestHistoryJob?.status?.toLowerCase();
+  const isHistoryJobActive = historyStatus === 'queued' || historyStatus === 'processing';
+
+  // Effective job ID to poll: triggered job takes precedence, then active historical job
+  const activeJobId =
+    triggeredJobId || (isHistoryJobActive ? latestHistoryJob.job_id || latestHistoryJob.id : null);
+
+  // Poll specific active job using GET /api/v1/repositories/sync-jobs/{job_id}
+  const { data: polledJob } = useSyncJob({
+    jobId: activeJobId,
+    workspaceId,
+    repositoryId: isTracked ? repository.id : null,
+  });
+
+  const activeJob = polledJob || latestHistoryJob;
+  const currentStatus = activeJob?.status?.toLowerCase();
+
+  // Active sync states: queued, processing (no running status)
   const isSyncActive =
     isSyncTriggering ||
-    latestJob?.status === 'queued' ||
-    latestJob?.status === 'running';
+    currentStatus === 'queued' ||
+    currentStatus === 'processing';
 
   const ownerLogin =
     repository.owner_login ||
@@ -61,6 +81,18 @@ export const RepositoryCard = ({
   const repoName = repository.name || repository.full_name;
   const defaultBranch = repository.default_branch || 'main';
   const isPrivate = Boolean(repository.private);
+
+  const handleSyncClick = async () => {
+    if (!onSync || isSyncActive) return;
+    try {
+      const res = await onSync(repository.id);
+      if (res?.job_id) {
+        setTriggeredJobId(res.job_id);
+      }
+    } catch (err) {
+      console.error('[RepositoryCard] Failed to trigger sync:', err);
+    }
+  };
 
   // Render status row based on real API sync state
   const renderStatusRow = () => {
@@ -81,36 +113,36 @@ export const RepositoryCard = ({
             aria-hidden="true"
           />
           <span className={styles.statusTextActive}>
-            {latestJob?.status === 'running' ? 'Updating your data...' : 'Sync queued...'}
+            {currentStatus === 'processing' ? 'Processing synchronization...' : 'Sync queued...'}
           </span>
-          {typeof latestJob?.total_synced === 'number' && latestJob.total_synced > 0 && (
-            <span>• {latestJob.total_synced} pull requests processed</span>
+          {typeof activeJob?.total_synced === 'number' && activeJob.total_synced > 0 && (
+            <span>• {activeJob.total_synced} pull requests processed</span>
           )}
         </div>
       );
     }
 
-    if (latestJob?.status === 'completed') {
-      const syncedTime = formatRelativeTime(latestJob.completed_at);
+    if (currentStatus === 'completed') {
+      const syncedTime = formatRelativeTime(activeJob?.completed_at);
       return (
         <div className={styles.statusRow}>
           <span className={`${styles.statusDot} ${styles.dotMint}`} aria-hidden="true" />
           <span>Your data is up to date</span>
-          {typeof latestJob.total_synced === 'number' && (
-            <span>• {latestJob.total_synced} pull requests synchronized</span>
+          {typeof activeJob?.total_synced === 'number' && (
+            <span>• {activeJob.total_synced} pull requests synchronized</span>
           )}
           {syncedTime && <span>• Synced {syncedTime}</span>}
         </div>
       );
     }
 
-    if (latestJob?.status === 'failed') {
-      const failedTime = formatRelativeTime(latestJob.completed_at);
+    if (currentStatus === 'failed') {
+      const failedTime = formatRelativeTime(activeJob?.completed_at);
       return (
         <div className={styles.statusRow}>
           <span className={`${styles.statusDot} ${styles.dotCoral}`} aria-hidden="true" />
           <span style={{ color: 'var(--color-error)' }}>
-            Sync failed: {latestJob.error_message || 'Task error'}
+            Sync failed: {activeJob?.error_message || 'Task error'}
           </span>
           {failedTime && <span>• {failedTime}</span>}
         </div>
@@ -196,7 +228,7 @@ export const RepositoryCard = ({
                   className={isSyncActive ? styles.spin : ''}
                 />
               }
-              onClick={() => onSync && onSync(repository.id)}
+              onClick={handleSyncClick}
               disabled={isSyncActive}
               aria-label={`Sync ${repoName}`}
             >

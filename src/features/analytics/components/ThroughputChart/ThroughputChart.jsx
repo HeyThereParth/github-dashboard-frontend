@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Info } from 'lucide-react';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { formatWeekStart } from '@/utils/date';
 import styles from './ThroughputChart.module.css';
 
 /**
@@ -19,19 +20,25 @@ export const ThroughputChart = ({
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
   const items = useMemo(() => {
-    const rawList = Array.isArray(data)
+    // Backend returns: { data: [ { week_start, merged_count, is_partial } ] }
+    const rawList = Array.isArray(data?.data)
+      ? data.data
+      : Array.isArray(data)
       ? data
       : data?.items || data?.weeks || [];
 
     return rawList.map((item, idx) => {
       const count = Number(
-        item.merged_prs ?? item.count ?? item.prs ?? item.total ?? 0,
+        item.merged_count ?? item.merged_prs ?? item.count ?? item.prs ?? item.total ?? 0,
       );
-      const label = item.week || item.week_start || item.label || `W${idx + 1}`;
+      const label = item.week_start
+        ? formatWeekStart(item.week_start)
+        : (item.week || item.label || `W${idx + 1}`);
       return {
-        id: item.id || `week-${idx}`,
+        id: item.week_start || item.id || `week-${idx}`,
         count,
         label,
+        isPartial: Boolean(item.is_partial),
       };
     });
   }, [data]);
