@@ -154,6 +154,74 @@
   color: var(--color-text-muted);
 }
 
+.statusBadgeTracked {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(53, 185, 138, 0.12);
+  border: 1px solid rgba(53, 185, 138, 0.25);
+  color: var(--palette-mint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-5);
+  text-align: center;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.emptyTitle {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-secondary);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.emptyDesc {
+  font-size: var(--font-size-metadata);
+  color: var(--color-text-muted);
+  max-width: 240px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.skeletonItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.skeletonBar {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 .viewAllLink {
   display: inline-flex;
   align-items: center;

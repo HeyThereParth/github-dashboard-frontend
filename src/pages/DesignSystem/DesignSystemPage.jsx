@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Search,
-  Download,
   Filter,
   RefreshCw,
   GitPullRequest,
@@ -17,7 +16,6 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-  MetricCard,
   Badge,
   StatusBadge,
   Input,
@@ -35,9 +33,70 @@ import {
   EmptyState,
   ErrorState,
 } from '@/components/ui';
-import { PullRequestActivityChart, ActiveRepositoriesCard } from '@/features/overview';
+import {
+  PullRequestActivityChart,
+  ActiveRepositoriesCard,
+  OverviewKpiGrid,
+  RecentPullRequestsCard,
+} from '@/features/overview';
 import { SAMPLE_ACTIVITY_DATA } from '@/features/overview/components/PullRequestActivityChart/sampleData';
+import { ThroughputChart, CycleTimeTrendChart } from '@/features/analytics';
 import styles from './DesignSystemPage.module.css';
+
+const SAMPLE_THROUGHPUT_DATA = {
+  data: [
+    { week_start: '2026-07-27T00:00:00', merged_count: 0, is_partial: false },
+    { week_start: '2026-08-03T00:00:00', merged_count: 0, is_partial: false },
+    { week_start: '2026-08-10T00:00:00', merged_count: 0, is_partial: false },
+    { week_start: '2026-08-17T00:00:00', merged_count: 0, is_partial: false },
+    { week_start: '2026-08-24T00:00:00', merged_count: 0, is_partial: false },
+    { week_start: '2026-08-31T00:00:00', merged_count: 0, is_partial: false },
+    { week_start: '2026-09-07T00:00:00', merged_count: 0, is_partial: false },
+    { week_start: '2026-09-14T00:00:00', merged_count: 3, is_partial: false },
+  ],
+};
+
+const SAMPLE_CYCLE_TIME_DATA = {
+  data: [
+    { week_start: '2026-07-27T00:00:00', p50_hours: 18.2, p90_hours: 42.5, avg_hours: 21.0, is_partial: false },
+    { week_start: '2026-08-03T00:00:00', p50_hours: 16.5, p90_hours: 38.0, avg_hours: 19.4, is_partial: false },
+    { week_start: '2026-08-10T00:00:00', p50_hours: 22.0, p90_hours: 48.0, avg_hours: 25.1, is_partial: false },
+    { week_start: '2026-08-17T00:00:00', p50_hours: null, p90_hours: null, avg_hours: null, is_partial: false },
+    { week_start: '2026-08-24T00:00:00', p50_hours: 19.8, p90_hours: 44.0, avg_hours: 23.2, is_partial: false },
+    { week_start: '2026-08-31T00:00:00', p50_hours: 15.0, p90_hours: 35.5, avg_hours: 18.0, is_partial: false },
+    { week_start: '2026-09-07T00:00:00', p50_hours: 17.4, p90_hours: 41.2, avg_hours: 20.8, is_partial: false },
+    { week_start: '2026-09-14T00:00:00', p50_hours: 18.4, p90_hours: 42.8, avg_hours: 21.4, is_partial: true },
+  ],
+};
+
+const SAMPLE_OVERVIEW_METRICS = {
+  total_prs: 1284,
+  open_prs: 312,
+  merged_prs: 842,
+  closed_unmerged_prs: 130,
+  merge_rate_percentage: 72.4,
+  cycle_time: {
+    p50_hours: 18.4,
+    p90_hours: 46.2,
+    avg_hours: 21.4,
+  },
+};
+
+const SAMPLE_TRACKED_REPOS = [
+  { id: '1', name: 'github-intelligence-core', default_branch: 'main', full_name: 'acme/github-intelligence-core', description: 'Ingestion daemon', private: true, is_tracked: true },
+  { id: '2', name: 'engineering-dashboard', default_branch: 'prod', full_name: 'acme/engineering-dashboard', description: 'Client web portal', private: false, is_tracked: true },
+  { id: '3', name: 'mobile-app', default_branch: 'main', full_name: 'acme/mobile-app', description: 'React Native shell', private: true, is_tracked: true },
+  { id: '4', name: 'infra-terraform', default_branch: 'prod', full_name: 'acme/infra-terraform', description: 'Cloud orchestration', private: true, is_tracked: true },
+  { id: '5', name: 'auth-service', default_branch: 'main', full_name: 'acme/auth-service', description: 'Token federation', private: false, is_tracked: true },
+];
+
+const SAMPLE_RECENT_PRS = [
+  { id: '1', number: 142, title: 'Fix authentication token expiration handling', repository_name: 'auth-service', author_login: 'schen', state: 'open', draft: false, github_created_at: '2026-09-19T20:00:00Z', github_updated_at: '2026-09-19T20:42:00Z', html_url: '#' },
+  { id: '2', number: 389, title: 'Optimize PR throughput telemetry ingestion batching', repository_name: 'github-intelligence-core', author_login: 'arivera', state: 'closed', merged_at: '2026-09-19T19:30:00Z', draft: false, github_created_at: '2026-09-19T04:45:00Z', github_updated_at: '2026-09-19T19:30:00Z', html_url: '#' },
+  { id: '3', number: 104, title: 'Implement dark mineral architectural design system', repository_name: 'engineering-dashboard', author_login: 'erostova', state: 'closed', merged_at: '2026-09-19T18:00:00Z', draft: false, github_created_at: '2026-09-19T09:48:00Z', github_updated_at: '2026-09-19T18:00:00Z', html_url: '#' },
+  { id: '4', number: 58, title: 'Refactor SQLite database migrations for workspace sync', repository_name: 'github-intelligence-core', author_login: 'dkim', state: 'open', draft: false, github_created_at: '2026-09-19T15:30:00Z', github_updated_at: '2026-09-19T16:00:00Z', html_url: '#' },
+  { id: '5', number: 211, title: 'Add repository default branch webhook verification', repository_name: 'infra-terraform', author_login: 'mvance', state: 'closed', merged_at: null, closed_at: '2026-09-19T13:00:00Z', draft: false, github_created_at: '2026-09-17T15:00:00Z', github_updated_at: '2026-09-19T13:00:00Z', html_url: '#' },
+];
 
 export const DesignSystemPage = () => {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -113,14 +172,14 @@ export const DesignSystemPage = () => {
             ← Back to Home
           </Link>
           <h1 className={styles.pageTitle}>GitHub Intelligence Design System</h1>
-          <p className={styles.pageDesc}>
+          {/* <p className={styles.pageDesc}>
             Approved architectural design language adhering strictly to the visual specifications in <code>DESIGN.md</code> and repository screenshots.
-          </p>
+          </p> */}
         </div>
         <div className={styles.headerActions}>
-          <Button variant="outline" size="sm" leftIcon={<Download size={14} />}>
+          {/* <Button variant="outline" size="sm" leftIcon={<Download size={14} />}>
             Export Specs
-          </Button>
+          </Button> */}
           <Button variant="primary" size="sm" leftIcon={<CheckCircle2 size={14} />}>
             Approved Reference
           </Button>
@@ -140,61 +199,52 @@ export const DesignSystemPage = () => {
         </div>
 
         {/* Top 4 KPI Metric Cards */}
-        <div className={styles.metricsGrid}>
-          <MetricCard
-            label="PULL REQUESTS"
-            value="1,284"
-            badge={<Badge variant="neutral">30D Window</Badge>}
-            subtext="312 open · 842 merged · 130 closed"
-            segments={[
-              { value: 312, color: 'coral', label: 'Open' },
-              { value: 842, color: 'gold', label: 'Merged' },
-              { value: 130, color: 'neutral', label: 'Closed' },
-            ]}
-          />
-
-          <MetricCard
-            label="MERGE RATE"
-            value="72.4%"
-            badge={
-              <span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>
-                ↑+4.2%
-              </span>
-            }
-            subtext="842 merged / 1,164 finalized"
-            progress={72.4}
-            progressColor="mint"
-          />
-
-          <MetricCard
-            label="TIME TO MERGE"
-            value="18.4"
-            suffix="hours"
-            badge={<Badge variant="neutral">P50 CAL</Badge>}
-            subtext="P90: 46.2h · Avg: 21.4h"
-            progress={40}
-            progressColor="gold"
-          />
-
-          <MetricCard
-            label="PR ACTIVITY"
-            value="104"
-            suffix="merged this wk"
-            badge={
-              <span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>
-                +18.4% vel
-              </span>
-            }
-            subtext="12 workspaces synchronized"
-            progress={85}
-            progressColor="gold"
-          />
-        </div>
+        <OverviewKpiGrid
+          overview={SAMPLE_OVERVIEW_METRICS}
+          trackedCount={5}
+          isGitHubConnected={true}
+          days={30}
+        />
 
         {/* Split Grid: Pull Request Activity Chart + Active Repositories */}
         <div className={styles.overviewSplitGrid}>
-          <PullRequestActivityChart data={SAMPLE_ACTIVITY_DATA} />
-          <ActiveRepositoriesCard />
+          <PullRequestActivityChart
+            data={SAMPLE_ACTIVITY_DATA}
+            days={30}
+            repositoryName="github-intelligence-core"
+          />
+          <ActiveRepositoriesCard
+            repositories={SAMPLE_TRACKED_REPOS}
+            selectedRepositoryId="1"
+          />
+        </div>
+
+        {/* Recent Pull Requests Table Stream */}
+        <div style={{ marginTop: 'var(--space-4)' }}>
+          <RecentPullRequestsCard
+            pullRequests={SAMPLE_RECENT_PRS}
+            total={1284}
+            repositoryName="auth-service"
+          />
+        </div>
+      </section>
+
+      {/* Flagship Reference Showcase: Engineering Analytics (From Screenshot) */}
+      <section className={styles.showcaseSection} aria-label="Approved Engineering Analytics Showcase">
+        <div className={styles.showcaseHeader}>
+          <div className={styles.showcaseEyebrow}>
+            <span className={styles.pulseDot} aria-hidden="true" />
+            <span>Approved Reference Composition — Engineering Analytics</span>
+          </div>
+          <span className={styles.showcaseSource}>
+            Source: screenshots/Engineering Analytics — GitHub Intelligence.png
+          </span>
+        </div>
+
+        {/* Weekly PR activity & delivery velocity */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
+          <ThroughputChart data={SAMPLE_THROUGHPUT_DATA} weeks={8} />
+          <CycleTimeTrendChart data={SAMPLE_CYCLE_TIME_DATA} weeks={8} />
         </div>
       </section>
 

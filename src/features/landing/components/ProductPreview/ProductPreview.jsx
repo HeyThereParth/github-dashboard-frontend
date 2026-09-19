@@ -72,24 +72,31 @@ export const ProductPreview = () => {
             />
 
             <MetricCard
-              label="PR ACTIVITY"
-              value="104"
-              suffix="merged this wk"
+              label="TRACKED REPOSITORIES"
+              value="5"
               badge={
                 <span style={{ color: 'var(--palette-mint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--font-size-label)' }}>
-                  +18.4% vel
+                  CONNECTED
                 </span>
               }
-              subtext="12 repositories tracked"
-              progress={85}
-              progressColor="gold"
+              subtext="5 repositories monitored • GitHub connected"
+              progress={100}
+              progressColor="mint"
             />
           </div>
 
           {/* Middle Split Grid: Pull Request Activity Chart + Active Repositories */}
           <div className={styles.overviewSplitGrid}>
             <PullRequestActivityChart data={SAMPLE_ACTIVITY_DATA} />
-            <ActiveRepositoriesCard />
+            <ActiveRepositoriesCard
+              repositories={[
+                { id: '1', name: 'github-intelligence-core', default_branch: 'main', full_name: 'acme/github-intelligence-core', description: 'Ingestion daemon', private: true, is_tracked: true },
+                { id: '2', name: 'engineering-dashboard', default_branch: 'prod', full_name: 'acme/engineering-dashboard', description: 'Client web portal', private: false, is_tracked: true },
+                { id: '3', name: 'mobile-app', default_branch: 'main', full_name: 'acme/mobile-app', description: 'React Native shell', private: true, is_tracked: true },
+                { id: '4', name: 'infra-terraform', default_branch: 'prod', full_name: 'acme/infra-terraform', description: 'Cloud orchestration', private: true, is_tracked: true },
+                { id: '5', name: 'auth-service', default_branch: 'main', full_name: 'acme/auth-service', description: 'Token federation', private: false, is_tracked: true },
+              ]}
+            />
           </div>
 
           {/* Table Snippet */}

@@ -44,6 +44,22 @@ export const formatWeekStart = (weekStartInput) => {
 };
 
 /**
+ * Format an ISO UTC string into a long date label (e.g. "Sep 14, 2026").
+ * Strictly uses UTC getters to prevent browser timezone shifts.
+ *
+ * @param {string | Date | null | undefined} dateInput
+ * @returns {string}
+ */
+export const formatUtcDateLong = (dateInput) => {
+  const date = parseUtcDate(dateInput);
+  if (!date) return String(dateInput || '');
+  const month = MONTH_NAMES[date.getUTCMonth()];
+  const day = date.getUTCDate();
+  const year = date.getUTCFullYear();
+  return `${month} ${day}, ${year}`;
+};
+
+/**
  * Format an ISO date string into a clean relative time label (e.g., "42s ago", "12m ago", "3h ago", "2d ago").
  * If the date is invalid or missing, returns a fallback string.
  *
@@ -84,6 +100,7 @@ export const formatRelativeTime = (dateInput) => {
 export default {
   parseUtcDate,
   formatWeekStart,
+  formatUtcDateLong,
   formatRelativeTime,
 };
 

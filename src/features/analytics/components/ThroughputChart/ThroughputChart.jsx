@@ -1,11 +1,30 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Info } from 'lucide-react';
-import { EmptyState } from '@/components/ui/EmptyState';
-import { formatWeekStart } from '@/utils/date';
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
+} from 'recharts';
+import {
+  AnalyticsChartContainer,
+  AnalyticsTooltip,
+  CHART_COLORS,
+  CHART_MARGINS,
+  Y_AXIS_WIDTH,
+  COMMON_AXIS_PROPS,
+  COMMON_GRID_PROPS,
+  calculateCountDomain,
+} from '@/components/charts';
+import { formatWeekStart, formatUtcDateLong } from '@/utils/date';
 import styles from './ThroughputChart.module.css';
 
 /**
- * Weekly PR throughput bar chart rendering merged PR delivery velocity.
+ * Weekly PR throughput bar chart rendering merged PR delivery velocity via Recharts.
  *
  * @param {object} props
  * @param {Array<object> | object | null} props.data - Raw throughput data from backend
@@ -17,8 +36,6 @@ export const ThroughputChart = ({
   weeks = 8,
   className = '',
 }) => {
-  const [hoveredIdx, setHoveredIdx] = useState(null);
-
   const items = useMemo(() => {
     // Backend returns: { data: [ { week_start, merged_count, is_partial } ] }
     const rawList = Array.isArray(data?.data)
@@ -34,11 +51,15 @@ export const ThroughputChart = ({
       const label = item.week_start
         ? formatWeekStart(item.week_start)
         : (item.week || item.label || `W${idx + 1}`);
+      const fullDateLabel = item.week_start ? formatUtcDateLong(item.week_start) : label;
+      const isPartial = Boolean(item.is_partial);
       return {
         id: item.week_start || item.id || `week-${idx}`,
+        weekStart: item.week_start,
         count,
         label,
-        isPartial: Boolean(item.is_partial),
+        fullDateLabel,
+        isPartial,
       };
     });
   }, [data]);
@@ -49,11 +70,6 @@ export const ThroughputChart = ({
   );
 
   const avgWeekly = items.length > 0 ? (totalMerged / items.length).toFixed(1) : '0.0';
-
-  const maxVal = useMemo(
-    () => Math.max(5, ...items.map((i) => i.count)),
-    [items],
-  );
 
   const peakIndex = useMemo(() => {
     if (items.length === 0) return -1;
@@ -68,182 +84,156 @@ export const ThroughputChart = ({
     return max > 0 ? maxIdx : -1;
   }, [items]);
 
-  // Chart dimensions in SVG viewBox coordinate space
-  const svgWidth = 700;
-  const svgHeight = 220;
-  const paddingTop = 35;
-  const paddingBottom = 35;
-  const paddingLeft = 30;
-  const paddingRight = 60;
-  const chartHeight = svgHeight - paddingTop - paddingBottom;
-  const chartWidth = svgWidth - paddingLeft - paddingRight;
+  // Mark isPeak on items so the custom tooltip displays the Peak badge
+  const chartItems = useMemo(() => {
+    return items.map((item, idx) => ({
+      ...item,
+      isPeak: idx === peakIndex && item.count > 0,
+    }));
+  }, [items, peakIndex]);
+
+  const maxVal = useMemo(
+    () => (chartItems.length > 0 ? Math.max(...chartItems.map((i) => i.count)) : 0),
+    [chartItems],
+  );
+
+  const { domain: yDomain, ticks: yTicks } = useMemo(
+    () => calculateCountDomain(maxVal),
+    [maxVal],
+  );
+
+  const legend = (
+    <>
+      <div className={styles.legendItem}>
+        <span className={styles.legendSquareMerged} aria-hidden="true" />
+        <span>Merged PRs</span>
+      </div>
+      <div className={styles.legendItem}>
+        <span className={styles.legendSquarePeak} aria-hidden="true" />
+        <span>Peak Output</span>
+      </div>
+      <div className={styles.legendItem}>
+        <span className={styles.legendLineAvg} aria-hidden="true" />
+        <span>Avg ({avgWeekly}/wk)</span>
+      </div>
+    </>
+  );
+
+  const footerLeft = (
+    <div className={styles.footerInfo}>
+      <Info size={13} className={styles.footerIcon} aria-hidden="true" />
+      <span>
+        {peakIndex >= 0
+          ? `Peak velocity occurred in ${chartItems[peakIndex].label} (${chartItems[peakIndex].count} PRs merged).`
+          : 'Velocity stable across recent delivery cycles.'}
+      </span>
+    </div>
+  );
+
+  const footerRight = (
+    <span>
+      TOTAL {totalMerged} MERGED ACROSS {chartItems.length} WEEKS
+    </span>
+  );
+
+  // Dynamic interval to prevent cramped labels on narrow viewports
+  const tickInterval = chartItems.length > 16 ? 2 : 0;
 
   return (
-    <div
-      className={`${styles.container} ${className}`}
-      role="region"
-      aria-label="Weekly PR activity and delivery velocity chart"
+    <AnalyticsChartContainer
+      title="Weekly PR activity & delivery velocity"
+      subtitle={`Pull requests merged per release train over the last ${weeks} weeks.`}
+      dotColor={CHART_COLORS.gold}
+      legend={legend}
+      footerLeft={footerLeft}
+      footerRight={footerRight}
+      isEmpty={chartItems.length === 0}
+      emptyTitle="No throughput data available"
+      emptyDescription="No weekly throughput records were found for the selected repository window."
+      className={className}
     >
-      <div className={styles.header}>
-        <div className={styles.titleArea}>
-          <div className={styles.titleRow}>
-            <span className={styles.dot} aria-hidden="true" />
-            <h3 className={styles.title}>Weekly PR activity & delivery velocity</h3>
-          </div>
-          <p className={styles.subtitle}>
-            Pull requests merged per week over the last {weeks} weeks.
-          </p>
-        </div>
+      <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+        <ComposedChart
+          data={chartItems}
+          margin={CHART_MARGINS}
+          barCategoryGap="20%"
+        >
+          <CartesianGrid {...COMMON_GRID_PROPS} />
+          <XAxis
+            dataKey="label"
+            interval={tickInterval}
+            {...COMMON_AXIS_PROPS}
+          />
+          <YAxis
+            width={Y_AXIS_WIDTH}
+            domain={yDomain}
+            ticks={yTicks}
+            allowDecimals={false}
+            {...COMMON_AXIS_PROPS}
+          />
+          <Tooltip
+            content={<AnalyticsTooltip titlePrefix="Throughput" unit=" PRs" />}
+            cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }}
+          />
 
-        <div className={styles.legend}>
-          <div className={styles.legendItem}>
-            <span className={`${styles.legendSquare} ${styles.legendMerged}`} />
-            <span>Merged PRs</span>
-          </div>
-          <div className={styles.legendItem}>
-            <span className={`${styles.legendSquare} ${styles.legendPeak}`} />
-            <span>Peak Output</span>
-          </div>
-          <div className={styles.legendItem}>
-            <span className={styles.legendLine} />
-            <span>Avg ({avgWeekly}/wk)</span>
-          </div>
-        </div>
-      </div>
+          {/* Average reference line sharing the exact coordinate space */}
+          {Number(avgWeekly) > 0 && (
+            <ReferenceLine
+              y={Number(avgWeekly)}
+              stroke="rgba(255, 255, 255, 0.2)"
+              strokeDasharray="3 3"
+              strokeWidth={1}
+            />
+          )}
 
-      {items.length === 0 ? (
-        <EmptyState
-          title="No throughput data available"
-          description="No weekly throughput records were found for the selected repository window."
-        />
-      ) : (
-        <>
-          <div className={styles.chartWrapper}>
-            <svg
-              viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-              className={styles.svgChart}
-              preserveAspectRatio="none"
-              role="img"
-              aria-label={`Weekly throughput chart. Total: ${totalMerged} PRs merged over ${items.length} weeks. Average: ${avgWeekly} PRs per week.`}
-            >
-              {/* Baseline */}
-              <line
-                x1={paddingLeft}
-                y1={paddingTop + chartHeight}
-                x2={paddingLeft + chartWidth}
-                y2={paddingTop + chartHeight}
-                stroke="var(--color-border)"
-              />
+          <Bar
+            dataKey="count"
+            name="Merged PRs"
+            maxBarSize={28}
+            isAnimationActive={false}
+            shape={(props) => {
+              const { x, y, width, height, index, payload } = props;
+              const isPeak = index === peakIndex && payload?.count > 0;
+              const fill = isPeak ? CHART_COLORS.gold : '#182d23';
+              const stroke = isPeak ? CHART_COLORS.gold : 'rgba(255, 255, 255, 0.12)';
 
-              {/* Average reference line */}
-              {Number(avgWeekly) > 0 && (
-                <>
-                  <line
-                    x1={paddingLeft}
-                    y1={
-                      paddingTop +
-                      chartHeight -
-                      (Number(avgWeekly) / maxVal) * chartHeight
-                    }
-                    x2={paddingLeft + chartWidth}
-                    y2={
-                      paddingTop +
-                      chartHeight -
-                      (Number(avgWeekly) / maxVal) * chartHeight
-                    }
-                    className={styles.avgLine}
+              if (height <= 0 || !payload?.count || payload.count <= 0) {
+                return null;
+              }
+
+              return (
+                <g key={`bar-${index}`}>
+                  <rect
+                    x={x}
+                    y={y}
+                    width={width}
+                    height={height}
+                    fill={fill}
+                    stroke={stroke}
+                    strokeWidth={1}
+                    rx={2}
+                    ry={2}
                   />
-                  <text
-                    x={paddingLeft + chartWidth + 6}
-                    y={
-                      paddingTop +
-                      chartHeight -
-                      (Number(avgWeekly) / maxVal) * chartHeight +
-                      3
-                    }
-                    className={styles.avgLabel}
-                  >
-                    {avgWeekly}
-                  </text>
-                </>
-              )}
-
-              {/* Bars */}
-              {items.map((item, idx) => {
-                const slotWidth = chartWidth / items.length;
-                const barWidth = Math.max(14, Math.min(42, slotWidth * 0.55));
-                const x = paddingLeft + idx * slotWidth + (slotWidth - barWidth) / 2;
-                const barHeight =
-                  maxVal > 0 ? (item.count / maxVal) * chartHeight : 0;
-                const y = paddingTop + chartHeight - barHeight;
-                const isPeak = idx === peakIndex;
-                const isHovered = idx === hoveredIdx;
-
-                return (
-                  <g
-                    key={item.id}
-                    onMouseEnter={() => setHoveredIdx(idx)}
-                    onMouseLeave={() => setHoveredIdx(null)}
-                    tabIndex={0}
-                    role="graphics-symbol"
-                    aria-label={`${item.label}: ${item.count} merged pull requests`}
-                    style={{ outline: 'none' }}
-                  >
-                    {/* Bar rectangle */}
-                    <rect
-                      x={x}
-                      y={y}
-                      width={barWidth}
-                      height={Math.max(2, barHeight)}
-                      rx={3}
-                      className={`${styles.bar} ${isPeak ? styles.barPeak : styles.barNormal}`}
-                      style={{
-                        opacity: hoveredIdx !== null && !isHovered ? 0.6 : 1,
-                      }}
-                    />
-
-                    {/* Value label above bar */}
-                    {item.count > 0 && (
-                      <text
-                        x={x + barWidth / 2}
-                        y={y - 8}
-                        className={styles.barLabel}
-                      >
-                        {item.count}
-                        {isPeak ? ' ★' : ''}
-                      </text>
-                    )}
-
-                    {/* Week X-axis label */}
+                  {isPeak && (
                     <text
-                      x={x + barWidth / 2}
-                      y={paddingTop + chartHeight + 20}
-                      className={styles.axisLabel}
+                      x={Number(x) + Number(width) / 2}
+                      y={Number(y) - 8}
+                      fill={CHART_COLORS.gold}
+                      textAnchor="middle"
+                      fontSize={11}
+                      fontWeight={600}
+                      fontFamily="var(--font-mono, monospace)"
                     >
-                      {item.label}
+                      {`${payload.count} ★`}
                     </text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
-
-          <div className={styles.footerNote}>
-            <div className={styles.footerLeft}>
-              <Info size={14} />
-              <span>
-                {peakIndex >= 0
-                  ? `Peak velocity occurred in ${items[peakIndex].label} (${items[peakIndex].count} PRs merged).`
-                  : 'Velocity stable across recent delivery cycles.'}
-              </span>
-            </div>
-            <span>
-              Total {totalMerged} pull requests merged across {items.length} weeks
-            </span>
-          </div>
-        </>
-      )}
-    </div>
+                  )}
+                </g>
+              );
+            }}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
+    </AnalyticsChartContainer>
   );
 };
 

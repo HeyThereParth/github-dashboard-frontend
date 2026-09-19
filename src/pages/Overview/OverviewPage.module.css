@@ -1,0 +1,129 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.preTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  color: var(--color-text-muted);
+  letter-spacing: var(--letter-spacing-tracked);
+  text-transform: uppercase;
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.liveDotConnected {
+  background-color: var(--palette-mint);
+  box-shadow: 0 0 8px rgba(53, 185, 138, 0.5);
+}
+
+.liveDotDisconnected {
+  background-color: var(--color-text-muted);
+}
+
+.liveText {
+  font-size: var(--font-size-metadata);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.title {
+  font-family: var(--font-headline);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-secondary);
+  margin: 0;
+  max-width: 680px;
+  line-height: 1.5;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.repoSelectorGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 4px 10px;
+}
+
+.repoSelectorLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  letter-spacing: var(--letter-spacing-tracked);
+  text-transform: uppercase;
+}
+
+.repoSelect {
+  background: none;
+  border: none;
+  color: var(--palette-gold);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+
+.repoSelect option {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.middleGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+.bottomSection {
+  width: 100%;
+}
+
+@media (max-width: 1120px) {
+  .middleGrid {
+    grid-template-columns: 1fr;
+  }
+}

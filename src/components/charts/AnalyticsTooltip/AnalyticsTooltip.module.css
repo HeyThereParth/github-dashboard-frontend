@@ -1,0 +1,93 @@
+.tooltip {
+  background-color: var(--palette-neutral-800, #0D1714);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 6px);
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  min-width: 170px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2, 8px);
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
+  padding-bottom: var(--space-2, 8px);
+}
+
+.title {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--font-size-label, 11px);
+  color: var(--color-text-primary, #E6ECE9);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.partialBadge {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  color: var(--palette-coral, #B96858);
+  background: var(--palette-coral-subtle, rgba(185, 104, 88, 0.12));
+  border: 1px solid rgba(185, 104, 88, 0.3);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm, 3px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.peakBadge {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  color: var(--palette-gold, #B7A16A);
+  background: var(--palette-gold-subtle, rgba(183, 161, 106, 0.12));
+  border: 1px solid rgba(183, 161, 106, 0.3);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm, 3px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.seriesItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--font-size-label, 11px);
+}
+
+.seriesLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-muted, #63736C);
+}
+
+.seriesDot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full, 9999px);
+  flex-shrink: 0;
+}
+
+.seriesValue {
+  font-weight: 500;
+  color: var(--color-text-primary, #E6ECE9);
+}
+
+.seriesValueNull {
+  color: var(--color-text-disabled, #4A5751);
+  font-style: italic;
+  font-weight: 400;
+}

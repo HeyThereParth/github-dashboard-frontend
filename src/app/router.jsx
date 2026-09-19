@@ -10,7 +10,6 @@ import OverviewPage from '@/pages/Overview';
 import RepositoriesPage from '@/pages/Repositories';
 import PullRequestsPage from '@/pages/PullRequests';
 import AnalyticsPage from '@/pages/Analytics';
-import PipelinePage from '@/pages/Pipeline';
 import SettingsPage from '@/pages/Settings';
 import GitHubCallbackPage from '@/pages/GitHubCallback';
 import { AuthGate } from '@/features/auth';
@@ -78,10 +77,10 @@ export const router = createBrowserRouter([
         path: 'analytics',
         element: <AnalyticsPage />,
       },
-      {
-        path: 'pipeline',
-        element: <PipelinePage />,
-      },
+      // {
+      //   path: 'pipeline',
+      //   element: <PipelinePage />,
+      // },
       {
         path: 'settings',
         element: <SettingsPage />,
