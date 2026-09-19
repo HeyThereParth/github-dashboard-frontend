@@ -111,4 +111,8 @@
   .nav {
     display: none;
   }
+
+  .brandTitle {
+    display: none;
+  }
 }

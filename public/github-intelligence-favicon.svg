@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="gold" x1="20" y1="18" x2="86" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E2C477"/>
+      <stop offset="1" stop-color="#9E7D3F"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="92" y1="20" x2="92" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#70E6C2"/>
+      <stop offset="1" stop-color="#249B7A"/>
+    </linearGradient>
+    <mask id="catCutout" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
+      <rect width="128" height="128" fill="black"/>
+      <!-- GitHub-inspired cat-ear/face cutout -->
+      <path d="M35 46L43 35L55 41C59 39 64 38 69 41L81 35L87 48L84 61C88 66 89 73 87 80C84 91 75 98 63 99C51 100 40 94 36 84C33 76 35 68 40 62L35 46Z" fill="white"/>
+    </mask>
+  </defs>
+
+  <!-- Gold G / signal ring -->
+  <path
+    d="M78 29C70 22 60 18 49 18C30 18 15 31 12 50C9 70 20 91 39 101L48 88C37 83 30 72 30 60C30 44 42 32 58 32C65 32 72 35 77 40L77 51L91 51L91 27C87 27 82 28 78 29Z"
+    fill="url(#gold)"
+  />
+
+  <!-- Cat cutout carved from the gold mark -->
+  <path
+    d="M35 46L43 35L55 41C59 39 64 38 69 41L81 35L87 48L84 61C88 66 89 73 87 80C84 91 75 98 63 99C51 100 40 94 36 84C33 76 35 68 40 62L35 46Z"
+    fill="#000"
+    opacity="0"
+    mask="url(#catCutout)"
+  />
+
+  <!-- Analytics bars -->
+  <rect x="48" y="78" width="11" height="30" rx="5.5" fill="url(#gold)"/>
+  <rect x="64" y="65" width="11" height="43" rx="5.5" fill="url(#gold)"/>
+  <rect x="80" y="51" width="11" height="57" rx="5.5" fill="url(#gold)"/>
+
+  <!-- Mint i / signal -->
+  <rect x="96" y="34" width="13" height="74" rx="6.5" fill="url(#mint)"/>
+  <circle cx="102.5" cy="22" r="7" fill="#70E6C2"/>
+</svg>

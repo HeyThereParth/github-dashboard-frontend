@@ -21,16 +21,50 @@
   overflow: visible;
 }
 
-/* Source labels (left side of SVG) */
-.sourceLabel {
+/* ── Icon containers ── */
+.iconBox {
+  fill: rgba(18, 30, 25, 0.9);
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+}
+
+/* Icon stroke styles */
+.iconStrokeMint {
+  fill: none;
+  stroke: var(--palette-mint);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+.iconStrokeGold {
+  fill: none;
+  stroke: var(--palette-gold);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+/* ── Source labels ── */
+.sourceTitle {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: var(--letter-spacing-tracked);
   text-transform: uppercase;
+  fill: var(--color-text-primary);
+}
+
+.sourceDescription {
+  font-family: var(--font-body);
+  font-size: 9.5px;
+  line-height: 1.4;
   fill: var(--palette-neutral-400);
 }
 
-/* Output label (right side of SVG) */
+/* ── Output label (right side) ── */
 .outputLabel {
   font-family: var(--font-mono);
   font-size: 9px;
@@ -43,7 +77,7 @@
   fill: var(--palette-gold);
 }
 
-/* Signal paths */
+/* ── Signal paths ── */
 .signalPath {
   fill: none;
   stroke-width: 1;
@@ -52,20 +86,15 @@
 
 .pathMint {
   stroke: var(--palette-mint);
-  opacity: 0.2;
+  opacity: 0.25;
 }
 
 .pathGold {
   stroke: var(--palette-gold);
-  opacity: 0.18;
+  opacity: 0.22;
 }
 
-.pathNeutral {
-  stroke: var(--palette-neutral-500);
-  opacity: 0.2;
-}
-
-/* Continuation line from convergence */
+/* ── Continuation line from convergence ── */
 .continuationPath {
   fill: none;
   stroke: var(--palette-neutral-500);
@@ -74,9 +103,9 @@
   opacity: 0.15;
 }
 
-/* Signal nodes */
+/* ── Signal nodes ── */
 .signalNode {
-  r: 3;
+  r: 3.5;
 }
 
 .nodeMint {
@@ -87,22 +116,21 @@
   fill: var(--palette-gold);
 }
 
-/* Central convergence node — slightly larger */
+/* ── Central convergence node ── */
 .convergenceNode {
   fill: var(--palette-mint);
-  r: 4.5;
+  r: 5;
 }
 
-/* Ring around convergence */
 .convergenceRing {
   fill: none;
   stroke: var(--palette-mint);
   stroke-width: 0.5;
-  r: 10;
+  r: 12;
   opacity: 0.15;
 }
 
-/* Flow indicators — tiny circles traveling along paths */
+/* ── Flow indicators ── */
 .flowDot {
   r: 1.5;
 }
@@ -115,8 +143,13 @@
   fill: var(--palette-gold);
 }
 
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .sourceLabel {
+  .sourceTitle {
+    font-size: 9px;
+  }
+
+  .sourceDescription {
     font-size: 8px;
   }
 
