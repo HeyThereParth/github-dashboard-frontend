@@ -1,97 +1,115 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { motion } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 import { usePrefersReducedMotion } from '../../hooks';
+import { SignalNetwork } from './SignalNetwork';
 import styles from './Hero.module.css';
 
-const DESCRIPTORS = [
-  'TRACKING · PULL REQUESTS',
-  'TRACKING · CYCLE TIME',
-  'TRACKING · REPOSITORY ACTIVITY',
-  'TRACKING · DELIVERY TRENDS',
-];
+/**
+ * Stagger delay offsets for the initial content reveal.
+ * eyebrow → headline → description → CTA → visualization
+ */
+const STAGGER = {
+  eyebrow: 0,
+  headline: 0.1,
+  description: 0.2,
+  cta: 0.3,
+  visual: 0.25,
+};
+
+const REVEAL_Y = 12;
+const REVEAL_DURATION = 0.45;
 
 export const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      const timer = setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % DESCRIPTORS.length);
-        setIsTransitioning(false);
-      }, 140);
-      return () => clearTimeout(timer);
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
+  const reveal = (delay) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: REVEAL_Y },
+          animate: { opacity: 1, y: 0 },
+          transition: {
+            duration: REVEAL_DURATION,
+            ease: 'easeOut',
+            delay,
+          },
+        };
 
   return (
     <section className={styles.heroSection} aria-label="Introduction">
-      <div className={styles.heroContent}>
-        <div className={styles.eyebrow}>
-          <span className={styles.eyebrowDot} aria-hidden="true" />
-          <span>GITHUB ENGINEERING INTELLIGENCE</span>
+      <div className={styles.heroContainer}>
+        {/* ── Left column: editorial content ── */}
+        <div className={styles.heroLeft}>
+          <motion.div className={styles.eyebrow} {...reveal(STAGGER.eyebrow)}>
+            <span className={styles.eyebrowDot} aria-hidden="true" />
+            <span>GITHUB ENGINEERING INTELLIGENCE</span>
+          </motion.div>
+
+          <motion.h1 className={styles.title} {...reveal(STAGGER.headline)}>
+            Know what&rsquo;s{' '}
+            <span className={styles.highlight}>moving</span>
+            <br />
+            in your engineering team.
+          </motion.h1>
+
+          <motion.p className={styles.description} {...reveal(STAGGER.description)}>
+            Turn GitHub activity into a clear view of what&rsquo;s moving,
+            what&rsquo;s slowing down, and what needs attention.
+          </motion.p>
+
+          <motion.div {...reveal(STAGGER.cta)}>
+            <Link to="/signup" className={styles.primaryCta}>
+              <span>Connect GitHub</span>
+              <span className={styles.ctaArrow} aria-hidden="true">
+                <ArrowRight size={15} />
+              </span>
+            </Link>
+          </motion.div>
         </div>
 
-        <h1 className={styles.title}>
-          See how your engineering work is moving.
-        </h1>
-
-        <p className={styles.description}>
-          GitHub Intelligence turns the activity already happening in your repositories and pull requests into a clearer view of what is moving, what is taking time, and what is changing.
-        </p>
-
-        <div className={styles.descriptorWrapper} aria-hidden="true">
-          <span
-            className={`${styles.rotatingDescriptor} ${
-              isTransitioning ? styles.descriptorLeaving : styles.descriptorEntering
-            }`}
-          >
-            {DESCRIPTORS[prefersReducedMotion ? 0 : currentIndex]}
-          </span>
-        </div>
-
-        <div className={styles.ctaGroup}>
-          <Link to="/signup" className={styles.primaryCta}>
-            <span>Connect GitHub</span>
-            <ArrowRight size={15} aria-hidden="true" />
-          </Link>
-          <Link to="/app/overview" className={styles.secondaryCta}>
-            <span>Explore Dashboard</span>
-          </Link>
-        </div>
-
-        <div className={styles.signalStrip} aria-hidden="true">
-          <span className={styles.signalItem}>
-            <span className={styles.signalMintDot} />
-            <span>12 repositories</span>
-          </span>
-          <span className={styles.signalDivider}>/</span>
-          <span className={styles.signalItem}>
-            <span className={styles.signalGoldDot} />
-            <span>P50 cycle time 14.2h</span>
-          </span>
-          <span className={styles.signalDivider}>/</span>
-          <span className={styles.signalItem}>
-            <span className={styles.signalCoralDot} />
-            <span>842 PRs merged</span>
-          </span>
-        </div>
+        {/* ── Right column: signal visualization ── */}
+        <motion.div
+          className={styles.heroRight}
+          {...(prefersReducedMotion
+            ? {}
+            : {
+                initial: { opacity: 0, x: 20 },
+                animate: { opacity: 1, x: 0 },
+                transition: {
+                  duration: 0.6,
+                  ease: 'easeOut',
+                  delay: STAGGER.visual,
+                },
+              })}
+        >
+          <SignalNetwork />
+        </motion.div>
       </div>
 
-      <div className={styles.scrollIndicator} aria-hidden="true">
-        <span className={styles.scrollText}>Scroll to inspect signals</span>
-        <ChevronDown size={14} className={styles.scrollChevron} />
+      {/* ── Metric strip ── */}
+      <div className={styles.metricStrip} aria-hidden="true">
+        <div className={styles.metricItem}>
+          <span className={styles.metricValue}>12</span>
+          <span className={styles.metricLabel}>REPOSITORIES</span>
+        </div>
+
+        <span className={styles.metricDivider} />
+
+        <div className={styles.metricItem}>
+          <span className={styles.metricValue}>14.2h</span>
+          <span className={styles.metricLabel}>P50 CYCLE TIME</span>
+        </div>
+
+        <span className={styles.metricDivider} />
+
+        <div className={styles.metricItem}>
+          <span className={styles.metricValue}>842</span>
+          <span className={styles.metricLabel}>PRS MERGED</span>
+        </div>
       </div>
     </section>
   );
 };
 
 export default Hero;
-

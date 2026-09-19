@@ -37,11 +37,11 @@
   color: var(--color-text-primary);
 }
 
-.brandDot {
-  width: 6px;
-  height: 6px;
-  border-radius: var(--radius-full);
-  background-color: var(--palette-gold);
+.brandLogo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .brandTitle {

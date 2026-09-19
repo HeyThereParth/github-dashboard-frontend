@@ -1,0 +1,132 @@
+/* ================================================================
+   SignalNetwork — Conceptual SVG visualization for Hero
+   ================================================================
+   Purely decorative. Renders convergence paths + signal nodes.
+   Animation handled by Motion for React.
+   ================================================================ */
+
+.networkContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.networkSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* Source labels (left side of SVG) */
+.sourceLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-tracked);
+  text-transform: uppercase;
+  fill: var(--palette-neutral-400);
+}
+
+/* Output label (right side of SVG) */
+.outputLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-tracked);
+  text-transform: uppercase;
+  fill: var(--palette-neutral-300);
+}
+
+.outputLabelAccent {
+  fill: var(--palette-gold);
+}
+
+/* Signal paths */
+.signalPath {
+  fill: none;
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.pathMint {
+  stroke: var(--palette-mint);
+  opacity: 0.2;
+}
+
+.pathGold {
+  stroke: var(--palette-gold);
+  opacity: 0.18;
+}
+
+.pathNeutral {
+  stroke: var(--palette-neutral-500);
+  opacity: 0.2;
+}
+
+/* Continuation line from convergence */
+.continuationPath {
+  fill: none;
+  stroke: var(--palette-neutral-500);
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.15;
+}
+
+/* Signal nodes */
+.signalNode {
+  r: 3;
+}
+
+.nodeMint {
+  fill: var(--palette-mint);
+}
+
+.nodeGold {
+  fill: var(--palette-gold);
+}
+
+/* Central convergence node — slightly larger */
+.convergenceNode {
+  fill: var(--palette-mint);
+  r: 4.5;
+}
+
+/* Ring around convergence */
+.convergenceRing {
+  fill: none;
+  stroke: var(--palette-mint);
+  stroke-width: 0.5;
+  r: 10;
+  opacity: 0.15;
+}
+
+/* Flow indicators — tiny circles traveling along paths */
+.flowDot {
+  r: 1.5;
+}
+
+.flowDotMint {
+  fill: var(--palette-mint);
+}
+
+.flowDotGold {
+  fill: var(--palette-gold);
+}
+
+@media (max-width: 768px) {
+  .sourceLabel {
+    font-size: 8px;
+  }
+
+  .outputLabel {
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flowDot {
+    display: none;
+  }
+}

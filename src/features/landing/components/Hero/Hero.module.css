@@ -1,26 +1,53 @@
+/* ================================================================
+   Hero — Editorial two-column layout
+   ================================================================
+   Left:  eyebrow, headline, supporting copy, single CTA (~45%)
+   Right: conceptual signal visualization (~55%)
+   Bottom: metric strip
+   ================================================================ */
+
 .heroSection {
   width: 100%;
   min-height: calc(100vh - 56px);
   min-height: calc(100dvh - 56px);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   position: relative;
   box-sizing: border-box;
-  padding: var(--space-8) var(--space-6) 64px;
+  padding: var(--space-10) var(--space-6) var(--space-8);
 }
 
-.heroContent {
+/* ── Two-column container ── */
+.heroContainer {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  max-width: 860px;
+  gap: 64px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+  flex: 1;
 }
 
+/* ── Left column: content ── */
+.heroLeft {
+  flex: 0 0 45%;
+  max-width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ── Right column: visualization ── */
+.heroRight {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Eyebrow ── */
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -39,74 +66,36 @@
   height: 5px;
   border-radius: var(--radius-full);
   background-color: var(--palette-mint);
-  box-shadow: 0 0 6px var(--palette-mint-glow);
+  flex-shrink: 0;
 }
 
+/* ── Headline ── */
 .title {
   font-family: var(--font-headline);
-  font-size: 56px;
+  font-size: 52px;
   line-height: 1.12;
   letter-spacing: -0.025em;
   color: var(--color-text-primary);
   margin-bottom: var(--space-4);
   font-weight: 400;
+  text-align: left;
 }
 
-@media (max-width: 768px) {
-  .title {
-    font-size: 38px;
-  }
+.highlight {
+  color: var(--palette-gold);
 }
 
+/* ── Supporting copy ── */
 .description {
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--color-text-secondary);
-  max-width: 660px;
-  margin-bottom: var(--space-3);
-}
-
-.descriptorWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 24px;
+  max-width: 440px;
   margin-bottom: var(--space-6);
 }
 
-.rotatingDescriptor {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: var(--letter-spacing-tracked);
-  color: var(--palette-gold);
-  text-transform: uppercase;
-  will-change: transform, opacity;
-}
-
-.descriptorEntering {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 160ms ease-out, transform 160ms ease-out;
-}
-
-.descriptorLeaving {
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 140ms ease-in, transform 140ms ease-in;
-}
-
-.ctaGroup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-}
-
+/* ── Primary CTA ── */
 .primaryCta {
   background-color: var(--palette-gold);
   color: var(--palette-neutral-900);
@@ -119,161 +108,170 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  transition: background-color var(--transition-fast), transform 180ms ease-out;
+  transition: background-color var(--transition-fast);
 }
 
 .primaryCta:hover {
   background-color: var(--palette-gold-light);
-  transform: translateY(-1px);
 }
 
-.secondaryCta {
-  background-color: transparent;
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
-  font-family: var(--font-body);
-  font-size: var(--font-size-body);
-  font-weight: 500;
-  padding: 12px 22px;
-  border-radius: var(--radius-sm);
-  text-decoration: none;
+.ctaArrow {
   display: inline-flex;
+  transition: transform 180ms ease-out;
+}
+
+.primaryCta:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+.primaryCta:active {
+  transform: scale(0.98);
+}
+
+/* ── Metric strip ── */
+.metricStrip {
+  display: flex;
   align-items: center;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform 180ms ease-out;
+  justify-content: center;
+  gap: var(--space-8);
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: var(--space-10);
 }
 
-.secondaryCta:hover {
-  border-color: var(--color-border-hover);
-  background-color: var(--color-surface-hover);
-  transform: translateY(-1px);
-}
-
-.signalStrip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-8);
-  padding: 6px 16px;
-  background-color: rgba(13, 23, 20, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: var(--radius-full);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--palette-neutral-300);
-}
-
-.signalItem {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.signalMintDot {
-  width: 5px;
-  height: 5px;
-  border-radius: var(--radius-full);
-  background-color: var(--palette-mint);
-  box-shadow: 0 0 5px var(--palette-mint-glow);
-  animation: mintBreathing 3s ease-in-out infinite;
-}
-
-@keyframes mintBreathing {
-  0%, 100% {
-    opacity: 0.75;
-    box-shadow: 0 0 3px var(--palette-mint-glow);
-  }
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 8px var(--palette-mint-glow);
-  }
-}
-
-.signalGoldDot {
-  width: 5px;
-  height: 5px;
-  border-radius: var(--radius-full);
-  background-color: var(--palette-gold);
-}
-
-.signalCoralDot {
-  width: 5px;
-  height: 5px;
-  border-radius: var(--radius-full);
-  background-color: var(--palette-coral);
-}
-
-.signalDivider {
-  color: rgba(255, 255, 255, 0.15);
-  user-select: none;
-}
-
-@media (max-width: 640px) {
-  .signalStrip {
-    flex-direction: column;
-    border-radius: var(--radius-sm);
-    gap: 6px;
-    padding: 8px 14px;
-    margin-top: var(--space-6);
-  }
-  .signalDivider {
-    display: none;
-  }
-}
-
-
-/* Bottom scroll indicator */
-.scrollIndicator {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+.metricItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  color: var(--color-text-muted);
-  opacity: 0.6;
-  transition: opacity var(--transition-fast);
-  pointer-events: none;
+  gap: 2px;
 }
 
-.scrollText {
+.metricValue {
+  font-family: var(--font-headline);
+  font-size: 28px;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.metricLabel {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: var(--letter-spacing-wide);
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-tracked);
+  color: var(--palette-neutral-400);
   text-transform: uppercase;
 }
 
-.scrollChevron {
-  animation: bounce 2s infinite ease-in-out;
+.metricDivider {
+  width: 1px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
 }
 
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
+/* ================================================================
+   Responsive — Tablet (≤ 1024px)
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .heroContainer {
+    gap: 40px;
   }
-  50% {
-    transform: translateY(4px);
+
+  .title {
+    font-size: 44px;
+  }
+
+  .heroLeft {
+    flex: 0 0 48%;
+    max-width: 48%;
   }
 }
 
-@media (max-height: 650px) {
-  .scrollIndicator {
-    display: none;
+/* ================================================================
+   Responsive — Mobile (≤ 768px)
+   ================================================================ */
+
+@media (max-width: 768px) {
+  .heroSection {
+    min-height: auto;
+    padding: var(--space-8) var(--space-6) var(--space-6);
+  }
+
+  .heroContainer {
+    flex-direction: column;
+    gap: var(--space-8);
+    align-items: flex-start;
+  }
+
+  .heroLeft {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .heroRight {
+    width: 100%;
+    max-height: 220px;
+  }
+
+  .title {
+    font-size: 38px;
+  }
+
+  .description {
+    max-width: 100%;
+    font-size: 15px;
+  }
+
+  .metricStrip {
+    gap: var(--space-6);
+    padding-top: var(--space-8);
+  }
+
+  .metricValue {
+    font-size: 22px;
+  }
+
+  .metricLabel {
+    font-size: 8px;
+  }
+
+  .metricDivider {
+    height: 24px;
   }
 }
+
+/* ================================================================
+   Responsive — Small mobile (≤ 390px)
+   ================================================================ */
+
+@media (max-width: 390px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .metricStrip {
+    gap: var(--space-4);
+  }
+
+  .metricValue {
+    font-size: 20px;
+  }
+}
+
+/* ================================================================
+   Reduced motion
+   ================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  .scrollChevron {
-    animation: none;
-  }
-  .signalMintDot {
-    animation: none;
-  }
-  .rotatingDescriptor {
+  .ctaArrow {
     transition: none;
+  }
+
+  .primaryCta:active {
     transform: none;
-    opacity: 1;
   }
 }
-
