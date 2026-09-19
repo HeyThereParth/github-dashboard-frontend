@@ -133,6 +133,7 @@
 /* ── Flow indicators ── */
 .flowDot {
   r: 1.5;
+  pointer-events: none;
 }
 
 .flowDotMint {

@@ -72,7 +72,7 @@ const SOURCES = [
   },
 ];
 
-const CONVERGENCE = { x: 410, y: 170 };
+const CONVERGENCE = { x: 480, y: 170 };
 
 /**
  * Build a smooth cubic bezier from path start to convergence.
@@ -88,8 +88,6 @@ const PATHS = SOURCES.map((src) => ({
   color: src.color,
 }));
 
-/* Continuation line from convergence to right */
-const CONTINUATION = `M ${CONVERGENCE.x} ${CONVERGENCE.y} L 560 ${CONVERGENCE.y}`;
 
 /**
  * Pulse configs — staggered delays for source nodes.
@@ -165,9 +163,8 @@ export const SignalNetwork = () => {
           <motion.path
             key={i}
             d={p.d}
-            className={`${styles.signalPath} ${
-              p.color === 'mint' ? styles.pathMint : styles.pathGold
-            }`}
+            className={`${styles.signalPath} ${p.color === 'mint' ? styles.pathMint : styles.pathGold
+              }`}
             initial={prefersReducedMotion ? false : { pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: p.color === 'mint' ? 0.25 : 0.22 }}
             transition={{
@@ -177,53 +174,40 @@ export const SignalNetwork = () => {
           />
         ))}
 
-        {/* ── Continuation line ── */}
-        <motion.path
-          d={CONTINUATION}
-          className={styles.continuationPath}
-          initial={prefersReducedMotion ? false : { pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 0.15 }}
-          transition={{
-            pathLength: { duration: 0.6, ease: 'easeOut', delay: 0.9 },
-            opacity: { duration: 0.4, delay: 0.9 },
-          }}
-        />
-
         {/* ── Source nodes (at path start points) ── */}
         {SOURCES.map((src, i) => (
           <motion.circle
             key={src.label}
             cx={PATH_START_X}
             cy={src.y}
-            className={`${styles.signalNode} ${
-              src.color === 'mint' ? styles.nodeMint : styles.nodeGold
-            }`}
+            className={`${styles.signalNode} ${src.color === 'mint' ? styles.nodeMint : styles.nodeGold
+              }`}
             initial={prefersReducedMotion ? { opacity: 0.5 } : { opacity: 0, scale: 0.6 }}
             animate={
               prefersReducedMotion
                 ? { opacity: 0.5 }
                 : {
-                    opacity: [0.35, 0.75, 0.35],
-                    scale: [1, 1.12, 1],
-                  }
+                  opacity: [0.35, 0.75, 0.35],
+                  scale: [1, 1.12, 1],
+                }
             }
             transition={
               prefersReducedMotion
                 ? { duration: 0 }
                 : {
-                    opacity: {
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: 0.5 + NODE_PULSE_CONFIGS[i].delay,
-                    },
-                    scale: {
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: 0.5 + NODE_PULSE_CONFIGS[i].delay,
-                    },
-                  }
+                  opacity: {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    delay: 0.5 + NODE_PULSE_CONFIGS[i].delay,
+                  },
+                  scale: {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    delay: 0.5 + NODE_PULSE_CONFIGS[i].delay,
+                  },
+                }
             }
           />
         ))}
@@ -245,27 +229,27 @@ export const SignalNetwork = () => {
             prefersReducedMotion
               ? { opacity: 0.7 }
               : {
-                  opacity: [0.7, 1, 0.7],
-                  scale: [1, 1.04, 1],
-                }
+                opacity: [0.7, 1, 0.7],
+                scale: [1, 1.04, 1],
+              }
           }
           transition={
             prefersReducedMotion
               ? { duration: 0 }
               : {
-                  opacity: {
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: 1.2,
-                  },
-                  scale: {
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: 1.2,
-                  },
-                }
+                opacity: {
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 1.2,
+                },
+                scale: {
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 1.2,
+                },
+              }
           }
         />
 
@@ -274,17 +258,26 @@ export const SignalNetwork = () => {
           FLOW_DOTS.map((dot, i) => (
             <circle
               key={i}
+              cx="0"
+              cy="0"
               r="1.5"
-              className={`${styles.flowDot} ${
-                dot.color === 'mint' ? styles.flowDotMint : styles.flowDotGold
-              }`}
-              opacity="0.6"
+              className={`${styles.flowDot} ${dot.color === 'mint' ? styles.flowDotMint : styles.flowDotGold
+                }`}
+              opacity="0"
             >
               <animateMotion
                 dur={dot.duration}
                 begin={dot.delay}
                 repeatCount="indefinite"
                 path={PATHS[dot.pathIndex].d}
+              />
+              <animate
+                attributeName="opacity"
+                values="0;0.75;0.75;0"
+                keyTimes="0;0.1;0.9;1"
+                dur={dot.duration}
+                begin={dot.delay}
+                repeatCount="indefinite"
               />
             </circle>
           ))}
