@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import {
-  Boxes,
   LayoutDashboard,
   FolderGit2,
   GitPullRequest,
@@ -21,15 +20,22 @@ export const Sidebar = ({ onNavigate = null }) => {
   return (
     <aside className={styles.sidebar}>
         {/* Branding */}
-        <div className={styles.brand}>
-          <div className={styles.brandIcon} aria-hidden="true">
-            <Boxes size={18} />
-          </div>
+        <Link
+          to="/app/overview"
+          className={styles.brand}
+          onClick={onNavigate}
+          aria-label="GitHub Intelligence Dashboard"
+        >
+          <img
+            src="/logo.png"
+            alt=""
+            className={styles.brandLogo}
+            aria-hidden="true"
+          />
           <div className={styles.brandText}>
-            <span className={styles.brandTag}>INTELLIGENCE</span>
             <span className={styles.brandTitle}>GitHub Intelligence</span>
           </div>
-        </div>
+        </Link>
 
         {/* Section Header */}
         <div className={styles.sectionLabel}>TELEMETRY CORE</div>
