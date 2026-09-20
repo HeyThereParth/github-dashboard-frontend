@@ -115,8 +115,43 @@
   color: var(--color-text-primary);
 }
 
-.footer {
+.lowerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) var(--space-2);
+  border-top: 1px solid var(--color-border-subtle);
   margin-top: auto;
+}
+
+.createWorkspaceBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.createWorkspaceBtn:hover {
+  color: var(--palette-gold);
+  background-color: var(--color-hover);
+}
+
+.createWorkspaceBtn:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 1px;
+}
+
+.footer {
   padding: var(--space-3);
   border-top: 1px solid var(--color-border-subtle);
   display: flex;

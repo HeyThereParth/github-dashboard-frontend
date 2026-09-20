@@ -12,3 +12,4 @@ export * from './Table';
 export * from './LoadingState';
 export * from './EmptyState';
 export * from './ErrorState';
+export * from './ErrorBoundary';

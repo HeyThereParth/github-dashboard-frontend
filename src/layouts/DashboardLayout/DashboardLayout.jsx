@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import { useWorkspace } from '@/features/workspace';
 import CreateFirstWorkspace from '@/features/workspace/components/CreateFirstWorkspace';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import styles from './DashboardLayout.module.css';
 
 export const DashboardLayout = () => {
@@ -33,7 +34,9 @@ export const DashboardLayout = () => {
       <div className={styles.mainWrapper}>
         <TopBar onToggleMobileMenu={toggleMobileMenu} />
         <main className={styles.contentArea}>
-          {hasNoWorkspaces ? <CreateFirstWorkspace /> : <Outlet />}
+          <ErrorBoundary>
+            {hasNoWorkspaces ? <CreateFirstWorkspace /> : <Outlet />}
+          </ErrorBoundary>
         </main>
       </div>
     </div>

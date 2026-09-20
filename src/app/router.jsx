@@ -13,11 +13,13 @@ import AnalyticsPage from '@/pages/Analytics';
 import SettingsPage from '@/pages/Settings';
 import GitHubCallbackPage from '@/pages/GitHubCallback';
 import { AuthGate } from '@/features/auth';
+import { RouteErrorBoundary } from '@/components/ui/ErrorBoundary';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <MarketingLayout />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         index: true,
@@ -40,14 +42,25 @@ export const router = createBrowserRouter([
         <GitHubCallbackPage />
       </AuthGate>
     ),
+    errorElement: <RouteErrorBoundary />,
   },
   {
     path: '/health-test',
     element: <HealthTestPage />,
+    errorElement: <RouteErrorBoundary />,
   },
   {
     path: '/design-system',
     element: <DesignSystemPage />,
+    errorElement: <RouteErrorBoundary />,
+  },
+  {
+    path: '/overview',
+    element: (
+      <AuthGate>
+        <Navigate to="/app/overview" replace />
+      </AuthGate>
+    ),
   },
   {
     path: '/app',
@@ -56,6 +69,7 @@ export const router = createBrowserRouter([
         <DashboardLayout />
       </AuthGate>
     ),
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         index: true,
@@ -85,7 +99,20 @@ export const router = createBrowserRouter([
         path: 'settings',
         element: <SettingsPage />,
       },
+      {
+        path: '*',
+        element: <Navigate to="/app/overview" replace />,
+      },
     ],
+  },
+  {
+    path: '*',
+    element: (
+      <AuthGate>
+        <Navigate to="/app/overview" replace />
+      </AuthGate>
+    ),
+    errorElement: <RouteErrorBoundary />,
   },
 ]);
 

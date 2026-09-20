@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Building2, ChevronsUpDown, Check, Plus } from 'lucide-react';
 import { useWorkspace } from '../../hooks/useWorkspace';
 import { Button } from '@/components/ui/Button';
+import { CreateWorkspaceModal } from '../CreateWorkspaceModal';
 import styles from './WorkspaceSelector.module.css';
 
 /**
@@ -10,17 +11,13 @@ import styles from './WorkspaceSelector.module.css';
  */
 export const WorkspaceSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCreating, setIsCreating] = useState(false);
-  const [newWorkspaceName, setNewWorkspaceName] = useState('');
-  const [createError, setCreateError] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const {
     workspaces,
     selectedWorkspaceId,
     currentWorkspace,
     setSelectedWorkspaceId,
-    createWorkspace,
-    isCreating: isSubmittingCreate,
   } = useWorkspace();
 
   const containerRef = useRef(null);
@@ -29,9 +26,6 @@ export const WorkspaceSelector = () => {
     const handleClickOutside = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
         setIsOpen(false);
-        setIsCreating(false);
-        setNewWorkspaceName('');
-        setCreateError(null);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -41,21 +35,6 @@ export const WorkspaceSelector = () => {
   const handleSelect = (id) => {
     setSelectedWorkspaceId(id);
     setIsOpen(false);
-  };
-
-  const handleCreateSubmit = async (e) => {
-    e.preventDefault();
-    if (!newWorkspaceName.trim()) return;
-
-    setCreateError(null);
-    try {
-      await createWorkspace({ name: newWorkspaceName.trim() });
-      setNewWorkspaceName('');
-      setIsCreating(false);
-      setIsOpen(false);
-    } catch (err) {
-      setCreateError(err.response?.data?.detail || err.message || 'Failed to create workspace');
-    }
   };
 
   const displayName = currentWorkspace?.name || (workspaces.length > 0 ? workspaces[0].name : 'Select Workspace');
@@ -100,57 +79,25 @@ export const WorkspaceSelector = () => {
 
           <div className={styles.divider} aria-hidden="true" />
 
-          {isCreating ? (
-            <form onSubmit={handleCreateSubmit} className={styles.createForm}>
-              <input
-                type="text"
-                placeholder="Workspace name..."
-                value={newWorkspaceName}
-                onChange={(e) => setNewWorkspaceName(e.target.value)}
-                className={styles.createInput}
-                autoFocus
-                disabled={isSubmittingCreate}
-              />
-              {createError && (
-                <span style={{ color: 'var(--color-error)', fontSize: '11px' }}>
-                  {createError}
-                </span>
-              )}
-              <div className={styles.createActions}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  type="submit"
-                  disabled={!newWorkspaceName.trim() || isSubmittingCreate}
-                >
-                  {isSubmittingCreate ? 'Creating...' : 'Create'}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  type="button"
-                  onClick={() => {
-                    setIsCreating(false);
-                    setCreateError(null);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          ) : (
-            <Button
-              variant="ghost"
-              size="sm"
-              fullWidth
-              leftIcon={<Plus size={14} />}
-              onClick={() => setIsCreating(true)}
-            >
-              Create Workspace
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            fullWidth
+            leftIcon={<Plus size={14} />}
+            onClick={() => {
+              setIsOpen(false);
+              setIsCreateModalOpen(true);
+            }}
+          >
+            Create Workspace
+          </Button>
         </div>
       )}
+
+      <CreateWorkspaceModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
     </div>
   );
 };
